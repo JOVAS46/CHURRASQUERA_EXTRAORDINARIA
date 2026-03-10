@@ -17,7 +17,7 @@
                     <div class="bg-white rounded-lg shadow p-6">
                         <h3 class="text-gray-500 text-sm font-medium mb-2">Ingresos Este Mes</h3>
                         <p class="text-3xl font-bold text-gray-900">{{ formatCurrency(monthSales.total) }}</p>
-                        <p class="text-sm text-gray-500 mt-1">{{ monthSales.count }} ventas completadas</p>
+                        <p class="text-sm text-gray-500 mt-1">{{ monthTickets }} tickets/pedidos al cocinero</p>
                     </div>
                     
                     <div class="bg-white rounded-lg shadow p-6">
@@ -84,6 +84,7 @@ import { computed } from 'vue';
 
 const props = defineProps({
     ventas: Array,
+    pedidos: Array,
 });
 
 const formatCurrency = (value) => {
@@ -115,14 +116,20 @@ const todaySales = computed(() => {
 const monthSales = computed(() => {
     const ventas_mes = props.ventas.filter(v => {
         const date = new Date(v.fecha_pedido);
-        return date.getMonth() === currentMonth && 
-               date.getFullYear() === currentYear &&
-               (v.estado === 'completado' || v.estado === 'entregado');
+        return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
     });
     return {
         total: ventas_mes.reduce((sum, v) => sum + (v.monto_total || 0), 0),
         count: ventas_mes.length,
     };
+});
+
+const monthTickets = computed(() => {
+    const pedidos_mes = props.pedidos.filter(p => {
+        const date = new Date(p.fecha_pedido);
+        return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+    });
+    return pedidos_mes.length;
 });
 
 const averageTicket = computed(() => {
@@ -146,7 +153,9 @@ const recientesVentas = computed(() => {
 const statusClass = (estado) => {
     const classes = {
         'completado': 'bg-green-100 text-green-800',
+        'entregado': 'bg-green-100 text-green-800',
         'pendiente': 'bg-yellow-100 text-yellow-800',
+        'preparacion': 'bg-blue-100 text-blue-800',
         'cancelado': 'bg-red-100 text-red-800',
     };
     return classes[estado] || 'bg-gray-100 text-gray-800';

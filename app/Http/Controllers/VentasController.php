@@ -34,8 +34,14 @@ class VentasController extends Controller
                 ];
             });
 
+        // Traer todos los pedidos para contar tickets generados al cocinero
+        $pedidos = Pedido::with(['mesa', 'usuario'])
+            ->orderBy('fecha_pedido', 'desc')
+            ->get();
+
         return Inertia::render('Ventas/Index', [
             'ventas' => $ventas,
+            'pedidos' => $pedidos,
         ]);
     }
 
