@@ -21,7 +21,7 @@
                     </div>
                     
                     <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-gray-500 text-sm font-medium mb-2">Ticket Promedio Hoy</h3>
+                        <h3 class="text-gray-500 text-sm font-medium mb-2">Venta Promedio Hoy</h3>
                         <p class="text-3xl font-bold text-gray-900">{{ formatCurrency(averageTicket) }}</p>
                         <p class="text-sm text-gray-500 mt-1">Por venta completada</p>
                     </div>
