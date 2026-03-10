@@ -11,19 +11,19 @@
                     <div class="bg-white rounded-lg shadow p-6">
                         <h3 class="text-gray-500 text-sm font-medium mb-2">Ingresos Hoy</h3>
                         <p class="text-3xl font-bold text-gray-900">{{ formatCurrency(todaySales.total) }}</p>
-                        <p class="text-sm text-gray-500 mt-1">{{ todaySales.count }} pedidos</p>
+                        <p class="text-sm text-gray-500 mt-1">{{ todaySales.count }} ventas completadas</p>
                     </div>
                     
                     <div class="bg-white rounded-lg shadow p-6">
                         <h3 class="text-gray-500 text-sm font-medium mb-2">Ingresos Este Mes</h3>
                         <p class="text-3xl font-bold text-gray-900">{{ formatCurrency(monthSales.total) }}</p>
-                        <p class="text-sm text-gray-500 mt-1">{{ monthSales.count }} pedidos</p>
+                        <p class="text-sm text-gray-500 mt-1">{{ monthSales.count }} ventas completadas</p>
                     </div>
                     
                     <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-gray-500 text-sm font-medium mb-2">Ticket Promedio</h3>
+                        <h3 class="text-gray-500 text-sm font-medium mb-2">Ticket Promedio Hoy</h3>
                         <p class="text-3xl font-bold text-gray-900">{{ formatCurrency(averageTicket) }}</p>
-                        <p class="text-sm text-gray-500 mt-1">Por pedido</p>
+                        <p class="text-sm text-gray-500 mt-1">Por venta completada</p>
                     </div>
                 </div>
 
@@ -103,7 +103,8 @@ const currentYear = new Date().getFullYear();
 
 const todaySales = computed(() => {
     const ventas_hoy = props.ventas.filter(v => 
-        new Date(v.fecha_pedido).toDateString() === today
+        new Date(v.fecha_pedido).toDateString() === today &&
+        (v.estado === 'completado' || v.estado === 'entregado')
     );
     return {
         total: ventas_hoy.reduce((sum, v) => sum + (v.monto_total || 0), 0),
@@ -114,7 +115,9 @@ const todaySales = computed(() => {
 const monthSales = computed(() => {
     const ventas_mes = props.ventas.filter(v => {
         const date = new Date(v.fecha_pedido);
-        return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+        return date.getMonth() === currentMonth && 
+               date.getFullYear() === currentYear &&
+               (v.estado === 'completado' || v.estado === 'entregado');
     });
     return {
         total: ventas_mes.reduce((sum, v) => sum + (v.monto_total || 0), 0),
@@ -123,9 +126,15 @@ const monthSales = computed(() => {
 });
 
 const averageTicket = computed(() => {
-    if (props.ventas.length === 0) return 0;
-    const total = props.ventas.reduce((sum, v) => sum + (v.monto_total || 0), 0);
-    return total / props.ventas.length;
+    // Ticket promedio solo de ventas completadas del día
+    const ventas_completadas_hoy = props.ventas.filter(v => 
+        new Date(v.fecha_pedido).toDateString() === today &&
+        (v.estado === 'completado' || v.estado === 'entregado')
+    );
+    
+    if (ventas_completadas_hoy.length === 0) return 0;
+    const total = ventas_completadas_hoy.reduce((sum, v) => sum + (v.monto_total || 0), 0);
+    return total / ventas_completadas_hoy.length;
 });
 
 const recientesVentas = computed(() => {
