@@ -11,7 +11,7 @@ class CajasController extends Controller
 {
     public function index()
     {
-        $pagos = Pago::with(['pedido', 'pedido.usuario', 'metodo_pago'])
+        $pagos = Pago::with(['pedido', 'pedido.usuario', 'metodoPago'])
             ->orderBy('fecha_pago', 'desc')
             ->get();
 
