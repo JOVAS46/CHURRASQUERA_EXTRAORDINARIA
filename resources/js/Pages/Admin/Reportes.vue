@@ -98,7 +98,7 @@
                             <div>
                                 <p class="text-gray-600 text-sm font-medium">Promedio/Venta</p>
                                 <p class="text-3xl font-bold text-purple-600 mt-2">{{ formatCurrency(estadisticas.promedioPorVenta) }}</p>
-                                <p class="text-xs text-gray-500 mt-2">Ticket promedio</p>
+                                <p class="text-xs text-gray-500 mt-2">Venta promedio</p>
                             </div>
                             <span class="text-4xl">📈</span>
                         </div>
