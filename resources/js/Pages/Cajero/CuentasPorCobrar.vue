@@ -520,7 +520,7 @@ const generarQR = async (pedido) => {
     estadoPagoActual.value = 'esperando';
     pollingPausado.value = false;
     nroVerificaciones.value = 0;
-    nroTransaccionActual.value = null; // Resetear número de transacción
+    nroTransaccionActual.value = null;
 
     try {
         const response = await fetch(`/cajero/generar-qr/${pedido.id_pedido}`, {
@@ -534,20 +534,31 @@ const generarQR = async (pedido) => {
             })
         });
 
-        const data = await response.json();
+        // ✅ Verificar si la respuesta es JSON válida
+        if (!response.ok && response.status >= 500) {
+            throw new Error(`Error del servidor (${response.status})`);
+        }
+
+        let data;
+        try {
+            data = await response.json();
+        } catch (parseError) {
+            console.error('Error al parsear JSON:', parseError);
+            console.error('Respuesta del servidor:', await response.text());
+            throw new Error('Respuesta inválida del servidor');
+        }
 
         if (data.success) {
             qrGenerado.value = data.qr_image;
-            nroTransaccionActual.value = data.nro_transaccion; // ✅ GUARDAR número de transacción
+            nroTransaccionActual.value = data.nro_transaccion;
             console.log('✅ QR Generado - Transacción:', data.nro_transaccion);
             mostrarModalQR.value = true;
-            // NO iniciar auto-polling - el usuario controla con botones
         } else {
-            alert('Error: ' + data.message);
+            alert('❌ Error: ' + (data.message || 'Error desconocido'));
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('Error al generar QR');
+        console.error('Error en generarQR:', error);
+        alert('❌ Error al generar QR: ' + error.message);
     } finally {
         cargandoQR.value = false;
     }

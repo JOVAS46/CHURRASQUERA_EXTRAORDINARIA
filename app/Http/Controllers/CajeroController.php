@@ -141,8 +141,21 @@ class CajeroController extends Controller
                     'fecha_venta' => now(),
                     'total' => $pedido->total,
                     'estado' => 'pendiente',
-                    'id_usuario' => Auth::id() ?? 1, // Usuario por defecto
+                    'id_usuario' => Auth::id() ?? 1,
                     'id_cliente' => $pedido->id_cliente,
+                ]);
+            }
+
+            // Si ya existe QR generado, devolverlo
+            if ($venta->qr_image) {
+                $pago = $venta->pagos()->first();
+                return response()->json([
+                    'success' => true,
+                    'qr_image' => $venta->qr_image,
+                    'nro_transaccion' => $pago->nro_transaccion ?? null,
+                    'venta_id' => $venta->id_venta,
+                    'pago_id' => $pago->id_pago ?? null,
+                    'message' => 'QR reutilizado'
                 ]);
             }
 
@@ -168,19 +181,29 @@ class CajeroController extends Controller
                 'qr_image' => $resultado['qr_image'],
             ]);
 
-            // Crear registro de pago pendiente
-            // Buscar metodo de pago QR o usar el primer método disponible
-            $metodoPago = MetodoPago::where('nombre', 'like', '%QR%')->first() 
-                ?? MetodoPago::first();
+            // Verificar si ya existe pago pendiente
+            $pago = $venta->pagos()->where('estado', 'pendiente')->first();
             
-            $pago = Pago::create([
-                'id_venta' => $venta->id_venta,
-                'fecha_pago' => now(),
-                'monto' => (float) $pedido->total,
-                'estado' => 'pendiente',
-                'id_metodo_pago' => $metodoPago->id_metodo_pago ?? 1,
-                'nro_transaccion' => $resultado['nro_transaccion'],
-            ]);
+            if ($pago) {
+                // Actualizar pago existente con nueva transacción
+                $pago->update([
+                    'nro_transaccion' => $resultado['nro_transaccion'],
+                    'updated_at' => now(),
+                ]);
+            } else {
+                // Crear nuevo pago
+                $metodoPago = MetodoPago::where('nombre', 'like', '%QR%')->first() 
+                    ?? MetodoPago::first();
+                
+                $pago = Pago::create([
+                    'id_venta' => $venta->id_venta,
+                    'fecha_pago' => now(),
+                    'monto' => (float) $pedido->total,
+                    'estado' => 'pendiente',
+                    'id_metodo_pago' => $metodoPago->id_metodo_pago ?? 1,
+                    'nro_transaccion' => $resultado['nro_transaccion'],
+                ]);
+            }
 
             return response()->json([
                 'success' => true,
