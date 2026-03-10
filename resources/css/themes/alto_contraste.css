@@ -1,0 +1,109 @@
+/* Tema Alto Contraste - Máxima Accesibilidad */
+
+.tema-alto_contraste {
+    --bg-color: #FFFFFF;
+    --text-color: #000000;
+    --border-color: #000000;
+}
+
+.tema-alto_contraste,
+.tema-alto_contraste body,
+.tema-alto_contraste * {
+    background-color: #FFFFFF;
+    color: #000000 !important;
+    border-color: #000000 !important;
+}
+
+.tema-alto_contraste .sidebar {
+    background-color: #000;
+    border-right: 3px solid #000;
+}
+
+.tema-alto_contraste .sidebar * {
+    color: #fff;
+}
+
+.tema-alto_contraste .header {
+    background-color: #fff;
+    border-bottom: 3px solid #000;
+}
+
+.tema-alto_contraste p,
+.tema-alto_contraste span,
+.tema-alto_contraste a,
+.tema-alto_contraste button,
+.tema-alto_contraste .text-gray-700,
+.tema-alto_contraste .text-gray-600,
+.tema-alto_contraste .text-gray-500 {
+    color: #000 !important;
+}
+
+.tema-alto_contraste .bg-gray-900,
+.tema-alto_contraste .bg-gray-800,
+.tema-alto_contraste .bg-gray-700 {
+    background-color: #000;
+    color: #fff;
+}
+
+.tema-alto_contraste input,
+.tema-alto_contraste select,
+.tema-alto_contraste textarea {
+    background-color: #fff;
+    color: #000;
+    border: 3px solid #000 !important;
+}
+
+.tema-alto_contraste button {
+    border: 2px solid #000;
+    background-color: #fff;
+    color: #000;
+}
+
+.tema-alto_contraste button:hover,
+.tema-alto_contraste a:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.tema-alto_contraste .border,
+.tema-alto_contraste .border-b,
+.tema-alto_contraste .border-r,
+.tema-alto_contraste .border-l,
+.tema-alto_contraste .border-t {
+    border-color: #000 !important;
+    border-width: 2px !important;
+}
+
+.tema-alto_contraste .card {
+    border: 3px solid #000;
+    background-color: #fff;
+    color: #000;
+}
+
+.tema-alto_contraste .table {
+    border: 3px solid #000;
+}
+
+.tema-alto_contraste .table th,
+.tema-alto_contraste .table td {
+    border: 2px solid #000;
+    color: #000;
+}
+
+.tema-alto_contraste .table thead {
+    background-color: #000;
+    color: #fff;
+}
+
+/* High contrast focus states */
+.tema-alto_contraste *:focus {
+    outline: 3px solid #000;
+    outline-offset: 2px;
+}
+
+/* High contrast links */
+.tema-alto_contraste a {
+    color: #000;
+    text-decoration: underline;
+    font-weight: bold;
+}

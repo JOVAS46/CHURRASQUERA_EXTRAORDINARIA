@@ -1,0 +1,213 @@
+/* ============================================
+   SISTEMA DE TEMAS GLOBAL
+   Aplicado directamente al contenedor raíz
+   ============================================= */
+
+/* DEFAULT: Tema Niños Modo Claro */
+.tema-ninos,
+.tema-ninos.modo-claro {
+    --bg-main: #FFFACD !important;
+    --bg-sidebar: linear-gradient(180deg, #FF6B6B 0%, #FF8E8E 100%) !important;
+    --text-main: #2C3E50 !important;
+    --text-sidebar: #ffffff !important;
+    --border-accent: #FF6B6B !important;
+    --input-bg: #FFFACD !important;
+    --input-border: #FF6B6B !important;
+    --button-bg: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important;
+    --button-text: #ffffff !important;
+    --heading-color: #FF6B6B !important;
+}
+
+/* Tema Niños Modo Oscuro */
+.tema-ninos.modo-oscuro {
+    --bg-main: #1A1A2E !important;
+    --bg-sidebar: linear-gradient(180deg, #1A1A2E 0%, #2D3561 100%) !important;
+    --text-main: #E8F5FF !important;
+    --text-sidebar: #ffffff !important;
+    --border-accent: #FF6B6B !important;
+    --input-bg: #2D3561 !important;
+    --input-border: #FF6B6B !important;
+    --button-bg: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important;
+    --button-text: #ffffff !important;
+    --heading-color: #FFB3B3 !important;
+}
+
+/* Tema Adultos Modo Claro */
+.tema-adultos,
+.tema-adultos.modo-claro {
+    --bg-main: #ECEFF1 !important;
+    --bg-sidebar: linear-gradient(180deg, #1A237E 0%, #283593 100%) !important;
+    --text-main: #1A237E !important;
+    --text-sidebar: #ffffff !important;
+    --border-accent: #3498DB !important;
+    --input-bg: #FFFFFF !important;
+    --input-border: #90CAF9 !important;
+    --button-bg: #3498DB !important;
+    --button-text: #ffffff !important;
+    --heading-color: #1A237E !important;
+}
+
+/* Tema Adultos Modo Oscuro */
+.tema-adultos.modo-oscuro {
+    --bg-main: #0D1B2A !important;
+    --bg-sidebar: linear-gradient(180deg, #0D1B2A 0%, #1B263B 100%) !important;
+    --text-main: #E0E1FF !important;
+    --text-sidebar: #ffffff !important;
+    --border-accent: #64B5F6 !important;
+    --input-bg: #1B263B !important;
+    --input-border: #42A5F5 !important;
+    --button-bg: #3498DB !important;
+    --button-text: #ffffff !important;
+    --heading-color: #90CAF9 !important;
+}
+
+/* Tema Alto Contraste */
+.tema-alto_contraste {
+    --bg-main: #FFFFFF !important;
+    --bg-sidebar: #000000 !important;
+    --text-main: #000000 !important;
+    --text-sidebar: #FFFFFF !important;
+    --border-accent: #000000 !important;
+    --input-bg: #FFFFFF !important;
+    --input-border: #000000 !important;
+    --button-bg: #000000 !important;
+    --button-text: #FFFFFF !important;
+    --heading-color: #000000 !important;
+}
+
+/* ============================================
+   APLICAR VARIABLES A ELEMENTOS
+   ============================================= */
+
+/* Contenedor principal */
+.tema-ninos,
+.tema-adultos,
+.tema-alto_contraste {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* Sidebar */
+aside.bg-gray-900 {
+    background: var(--bg-sidebar) !important;
+    color: var(--text-sidebar) !important;
+}
+
+aside.bg-gray-900 * {
+    color: var(--text-sidebar) !important;
+    border-color: var(--border-accent) !important;
+}
+
+/* Header */
+header.bg-white {
+    background-color: white !important;
+    color: var(--text-main) !important;
+}
+
+header.bg-white .border-b-2 {
+    border-color: var(--border-accent) !important;
+}
+
+/* Escrituras generales */
+p, span, div, label {
+    color: var(--text-main) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color) !important;
+    font-weight: bold;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+    background-color: var(--input-bg) !important;
+    color: var(--text-main) !important;
+    border-color: var(--input-border) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline-color: var(--border-accent) !important;
+    border-color: var(--border-accent) !important;
+}
+
+/* Botones */
+button {
+    background: var(--button-bg) !important;
+    color: var(--button-text) !important;
+    border: none !important;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Bordes */
+.border-b-2,
+.border-r-2,
+.border-l-2,
+.border-t-2 {
+    border-color: var(--border-accent) !important;
+}
+
+.border-orange-600 {
+    border-color: var(--border-accent) !important;
+}
+
+/* Clases de fondo */
+.bg-gray-100 {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+.bg-white {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+.bg-gray-900 {
+    background: var(--bg-sidebar) !important;
+    color: var(--text-sidebar) !important;
+}
+
+/* Clases de texto */
+.text-gray-700,
+.text-gray-600,
+.text-gray-500,
+.text-gray-400 {
+    color: var(--text-main) !important;
+}
+
+.text-orange-600,
+.text-orange-300,
+.text-orange-500 {
+    color: var(--heading-color) !important;
+}
+
+/* Alto Contraste específico */
+.tema-alto_contraste input,
+.tema-alto_contraste textarea,
+.tema-alto_contraste select {
+    border-width: 3px !important;
+}
+
+.tema-alto_contraste button {
+    border: 3px solid #000000 !important;
+}
+
+.tema-alto_contraste * {
+    font-weight: 600;
+}
+
+/* Hover y focus estados */
+.tema-alto_contraste button:hover {
+    filter: invert(1);
+}
+
+.tema-alto_contraste *:focus {
+    outline: 4px solid #000000 !important;
+    outline-offset: 2px;
+}

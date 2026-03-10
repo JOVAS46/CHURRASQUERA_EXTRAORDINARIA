@@ -1,0 +1,194 @@
+/* Accesibilidad - Tamaños de Fuente y Contraste */
+
+/* Font Sizes */
+.tamaño-pequeno {
+    font-size: 13px;
+}
+
+.tamaño-pequeno .text-sm {
+    font-size: 11px;
+}
+
+.tamaño-pequeno .text-base {
+    font-size: 13px;
+}
+
+.tamaño-pequeno .text-lg {
+    font-size: 15px;
+}
+
+.tamaño-pequeno .text-xl {
+    font-size: 17px;
+}
+
+.tamaño-pequeno h1 {
+    font-size: 24px;
+}
+
+.tamaño-pequeno h2 {
+    font-size: 20px;
+}
+
+.tamaño-pequeno h3 {
+    font-size: 18px;
+}
+
+/* Medium size (default) */
+.tamaño-mediano {
+    font-size: 16px;
+}
+
+.tamaño-mediano .text-sm {
+    font-size: 14px;
+}
+
+.tamaño-mediano .text-base {
+    font-size: 16px;
+}
+
+.tamaño-mediano .text-lg {
+    font-size: 18px;
+}
+
+.tamaño-mediano .text-xl {
+    font-size: 20px;
+}
+
+.tamaño-mediano h1 {
+    font-size: 28px;
+}
+
+.tamaño-mediano h2 {
+    font-size: 24px;
+}
+
+.tamaño-mediano h3 {
+    font-size: 20px;
+}
+
+/* Large size */
+.tamaño-grande {
+    font-size: 18px;
+}
+
+.tamaño-grande .text-sm {
+    font-size: 16px;
+}
+
+.tamaño-grande .text-base {
+    font-size: 18px;
+}
+
+.tamaño-grande .text-lg {
+    font-size: 20px;
+}
+
+.tamaño-grande .text-xl {
+    font-size: 22px;
+}
+
+.tamaño-grande h1 {
+    font-size: 32px;
+}
+
+.tamaño-grande h2 {
+    font-size: 28px;
+}
+
+.tamaño-grande h3 {
+    font-size: 24px;
+}
+
+/* High Contrast Mode */
+.contraste-alto {
+    --text-color: #000;
+    --bg-color: #fff;
+    --border-color: #000;
+}
+
+.contraste-alto body,
+.contraste-alto .bg-white,
+.contraste-alto .bg-gray-100 {
+    background-color: #fff;
+}
+
+.contraste-alto p,
+.contraste-alto span,
+.contraste-alto a,
+.contraste-alto button,
+.contraste-alto .text-gray-700,
+.contraste-alto .text-gray-600,
+.contraste-alto .text-gray-500 {
+    color: #000;
+}
+
+.contraste-alto .bg-gray-900,
+.contraste-alto .bg-gray-800,
+.contraste-alto .bg-gray-700 {
+    background-color: #000;
+    color: #fff;
+}
+
+.contraste-alto input,
+.contraste-alto select,
+.contraste-alto textarea {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+}
+
+.contraste-alto button {
+    border: 2px solid #000;
+}
+
+.contraste-alto .border,
+.contraste-alto .border-b,
+.contraste-alto .border-r,
+.contraste-alto .border-l,
+.contraste-alto .border-t {
+    border-color: #000 !important;
+}
+
+.contraste-alto .text-orange-600,
+.contraste-alto .text-blue-600,
+.contraste-alto .text-green-600 {
+    color: #000;
+    font-weight: bold;
+}
+
+/* High Contrast Hover States */
+.contraste-alto button:hover,
+.contraste-alto a:hover {
+    filter: invert(1);
+    background-color: #000;
+    color: #fff;
+}
+
+/* Focus states for accessibility */
+.contraste-alto *:focus {
+    outline: 3px solid #000;
+    outline-offset: 2px;
+}
+
+/* High Contrast Cards */
+.contraste-alto .card {
+    border: 2px solid #000;
+    background-color: #fff;
+    color: #000;
+}
+
+/* High Contrast Tables */
+.contraste-alto .table {
+    border: 2px solid #000;
+}
+
+.contraste-alto .table th,
+.contraste-alto .table td {
+    border: 1px solid #000;
+    color: #000;
+}
+
+.contraste-alto .table thead {
+    background-color: #000;
+    color: #fff;
+}

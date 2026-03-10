@@ -1,0 +1,153 @@
+/* Tema Adultos - Profesional y Elegante */
+
+/* ===== MODO CLARO ADULTOS ===== */
+.tema-adultos.modo-claro {
+    --primary-color: #2C3E50;
+    --secondary-color: #3498DB;
+    --accent-color: #E74C3C;
+    --bg-primary: #ECEFF1;
+    --bg-secondary: #CFD8DC;
+    --text-primary: #1A237E;
+    --text-secondary: #283593;
+    --border-color: #3498DB;
+}
+
+.tema-adultos.modo-claro,
+.tema-adultos.modo-claro body {
+    background-color: #ECEFF1 !important;
+    color: #1A237E !important;
+}
+
+.tema-adultos.modo-claro .bg-gray-100 {
+    background-color: #F5F5F5 !important;
+}
+
+.tema-adultos.modo-claro .bg-white {
+    background-color: #FFFFFF !important;
+}
+
+.tema-adultos.modo-claro .bg-gray-900 {
+    background: linear-gradient(180deg, #1A237E 0%, #283593 100%) !important;
+    color: #ffffff !important;
+    border-right-color: #3498DB !important;
+}
+
+.tema-adultos.modo-claro .text-gray-700,
+.tema-adultos.modo-claro .text-gray-600,
+.tema-adultos.modo-claro .text-gray-500 {
+    color: #283593 !important;
+}
+
+.tema-adultos.modo-claro .border-orange-600 {
+    border-color: #3498DB !important;
+}
+
+.tema-adultos.modo-claro input,
+.tema-adultos.modo-claro textarea,
+.tema-adultos.modo-claro select {
+    background-color: #FFFFFF !important;
+    color: #1A237E !important;
+    border: 1px solid #90CAF9 !important;
+    border-radius: 4px;
+}
+
+.tema-adultos.modo-claro input:focus,
+.tema-adultos.modo-claro textarea:focus {
+    outline: 2px solid #3498DB !important;
+    border-color: #3498DB !important;
+}
+
+.tema-adultos.modo-claro button {
+    background-color: #3498DB !important;
+    color: white !important;
+    border-radius: 4px;
+    border: none !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tema-adultos.modo-claro button:hover {
+    background-color: #2980B9 !important;
+}
+
+.tema-adultos.modo-claro h1,
+.tema-adultos.modo-claro h2,
+.tema-adultos.modo-claro h3 {
+    color: #1A237E !important;
+    font-weight: 700;
+}
+
+/* ===== MODO OSCURO ADULTOS ===== */
+.tema-adultos.modo-oscuro {
+    --bg-primary: #0D1B2A;
+    --bg-secondary: #1B263B;
+    --text-primary: #E0E1FF;
+    --text-secondary: #B0BEFF;
+    --border-color: #3498DB;
+}
+
+.tema-adultos.modo-oscuro,
+.tema-adultos.modo-oscuro body {
+    background-color: #0D1B2A !important;
+    color: #E0E1FF !important;
+}
+
+.tema-adultos.modo-oscuro .bg-gray-100 {
+    background-color: #1B263B !important;
+}
+
+.tema-adultos.modo-oscuro .bg-white {
+    background-color: #234578 !important;
+}
+
+.tema-adultos.modo-oscuro .bg-gray-900 {
+    background: linear-gradient(180deg, #0D1B2A 0%, #1B263B 100%) !important;
+    color: #ffffff !important;
+    border-right-color: #42A5F5 !important;
+}
+
+.tema-adultos.modo-oscuro .text-gray-700,
+.tema-adultos.modo-oscuro .text-gray-600,
+.tema-adultos.modo-oscuro .text-gray-500 {
+    color: #B0BEFF !important;
+}
+
+.tema-adultos.modo-oscuro .border-orange-600 {
+    border-color: #64B5F6 !important;
+}
+
+.tema-adultos.modo-oscuro input,
+.tema-adultos.modo-oscuro textarea,
+.tema-adultos.modo-oscuro select {
+    background-color: #1B263B !important;
+    color: #E0E1FF !important;
+    border: 1px solid #42A5F5 !important;
+    border-radius: 4px;
+}
+
+.tema-adultos.modo-oscuro input:focus,
+.tema-adultos.modo-oscuro textarea:focus {
+    outline: 2px solid #3498DB !important;
+    border-color: #3498DB !important;
+}
+
+.tema-adultos.modo-oscuro button {
+    background-color: #3498DB !important;
+    color: white !important;
+    border-radius: 4px;
+    border: none !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tema-adultos.modo-oscuro button:hover {
+    background-color: #42A5F5 !important;
+}
+
+.tema-adultos.modo-oscuro h1,
+.tema-adultos.modo-oscuro h2,
+.tema-adultos.modo-oscuro h3 {
+    color: #90CAF9 !important;
+}

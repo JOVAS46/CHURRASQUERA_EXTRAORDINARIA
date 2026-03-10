@@ -1,0 +1,123 @@
+/* ============================================
+   SISTEMA SISTEMA DE TEMAS SIMPLIFICADO
+   ============================================= */
+
+/* ===== TEMA NIÑOS ===== */
+.tema-ninos.modo-claro {
+    background-color: #FFFACD !important;
+    color: #2C3E50 !important;
+}
+
+.tema-ninos.modo-claro aside { background: linear-gradient(180deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; }
+.tema-ninos.modo-claro aside * { color: white !important; }
+.tema-ninos.modo-claro h1, .tema-ninos.modo-claro h2, .tema-ninos.modo-claro h3 { color: #FF6B6B !important; }
+.tema-ninos.modo-claro input, .tema-ninos.modo-claro textarea, .tema-ninos.modo-claro select { background-color: #FFFACD !important; color: #2C3E50 !important; border-color: #FF6B6B !important; }
+.tema-ninos.modo-claro button { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; border: none !important; }
+.tema-ninos.modo-claro .bg-white { background-color: #FFFACD !important; color: #2C3E50 !important; }
+.tema-ninos.modo-claro .bg-gray-900 { background: linear-gradient(180deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; }
+.tema-ninos.modo-claro .border-orange-600 { border-color: #FF6B6B !important; }
+
+.tema-ninos.modo-oscuro {
+    background-color: #1A1A2E !important;
+    color: #E8F5FF !important;
+}
+
+.tema-ninos.modo-oscuro aside { background: linear-gradient(180deg, #1A1A2E 0%, #2D3561 100%) !important; color: white !important; }
+.tema-ninos.modo-oscuro aside * { color: white !important; }
+.tema-ninos.modo-oscuro h1, .tema-ninos.modo-oscuro h2, .tema-ninos.modo-oscuro h3 { color: #FFB3B3 !important; }
+.tema-ninos.modo-oscuro input, .tema-ninos.modo-oscuro textarea, .tema-ninos.modo-oscuro select { background-color: #2D3561 !important; color: #E8F5FF !important; border-color: #FF6B6B !important; }
+.tema-ninos.modo-oscuro button { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; border: none !important; }
+.tema-ninos.modo-oscuro .bg-white { background-color: #2D3561 !important; color: #E8F5FF !important; }
+.tema-ninos.modo-oscuro .bg-gray-900 { background: linear-gradient(180deg, #1A1A2E 0%, #2D3561 100%) !important; color: white !important; }
+.tema-ninos.modo-oscuro .border-orange-600 { border-color: #FF6B6B !important; }
+
+/* ===== TEMA ADULTOS ===== */
+.tema-adultos.modo-claro {
+    background-color: #ECEFF1 !important;
+    color: #1A237E !important;
+}
+
+.tema-adultos.modo-claro aside { background: linear-gradient(180deg, #1A237E 0%, #283593 100%) !important; color: white !important; }
+.tema-adultos.modo-claro aside * { color: white !important; }
+.tema-adultos.modo-claro h1, .tema-adultos.modo-claro h2, .tema-adultos.modo-claro h3 { color: #1A237E !important; }
+.tema-adultos.modo-claro input, .tema-adultos.modo-claro textarea, .tema-adultos.modo-claro select { background-color: #FFFFFF !important; color: #1A237E !important; border-color: #90CAF9 !important; }
+.tema-adultos.modo-claro button { background-color: #3498DB !important; color: white !important; border: none !important; }
+.tema-adultos.modo-claro .bg-white { background-color: #FFFFFF !important; color: #1A237E !important; }
+.tema-adultos.modo-claro .bg-gray-900 { background: linear-gradient(180deg, #1A237E 0%, #283593 100%) !important; color: white !important; }
+.tema-adultos.modo-claro .border-orange-600 { border-color: #3498DB !important; }
+
+.tema-adultos.modo-oscuro {
+    background-color: #0D1B2A !important;
+    color: #E0E1FF !important;
+}
+
+.tema-adultos.modo-oscuro aside { background: linear-gradient(180deg, #0D1B2A 0%, #1B263B 100%) !important; color: white !important; }
+.tema-adultos.modo-oscuro aside * { color: white !important; }
+.tema-adultos.modo-oscuro h1, .tema-adultos.modo-oscuro h2, .tema-adultos.modo-oscuro h3 { color: #90CAF9 !important; }
+.tema-adultos.modo-oscuro input, .tema-adultos.modo-oscuro textarea, .tema-adultos.modo-oscuro select { background-color: #1B263B !important; color: #E0E1FF !important; border-color: #42A5F5 !important; }
+.tema-adultos.modo-oscuro button { background-color: #3498DB !important; color: white !important; border: none !important; }
+.tema-adultos.modo-oscuro .bg-white { background-color: #1B263B !important; color: #E0E1FF !important; }
+.tema-adultos.modo-oscuro .bg-gray-900 { background: linear-gradient(180deg, #0D1B2A 0%, #1B263B 100%) !important; color: white !important; }
+.tema-adultos.modo-oscuro .border-orange-600 { border-color: #64B5F6 !important; }
+
+/* ===== ALTO CONTRASTE ===== */
+.tema-alto_contraste {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}
+
+.tema-alto_contraste * { background-color: #FFFFFF !important; color: #000000 !important; border-color: #000000 !important; }
+.tema-alto_contraste aside { background-color: #000000 !important; color: white !important; border-right: 3px solid #000000 !important; }
+.tema-alto_contraste aside * { color: white !important; }
+.tema-alto_contraste h1, .tema-alto_contraste h2, .tema-alto_contraste h3 { color: #000000 !important; font-weight: 900 !important; }
+.tema-alto_contraste input, .tema-alto_contraste textarea, .tema-alto_contraste select { background-color: #FFFFFF !important; color: #000000 !important; border: 3px solid #000000 !important; }
+.tema-alto_contraste button { background-color: #000000 !important; color: #FFFFFF !important; border: 3px solid #000000 !important; font-weight: 900 !important; }
+.tema-alto_contraste .bg-white { background-color: #FFFFFF !important; color: #000000 !important; }
+.tema-alto_contraste .bg-gray-900 { background-color: #000000 !important; color: white !important; }
+
+/* ===== TAMAÑO DE FUENTE ===== */
+.tamaño-pequeno { font-size: 13px !important; }
+.tamaño-pequeno h1 { font-size: 24px !important; }
+.tamaño-pequeno h2 { font-size: 20px !important; }
+.tamaño-pequeno h3 { font-size: 18px !important; }
+.tamaño-pequeno button { font-size: 12px !important; }
+.tamaño-pequeno input { font-size: 12px !important; }
+
+.tamaño-mediano { font-size: 16px !important; }
+.tamaño-mediano h1 { font-size: 28px !important; }
+.tamaño-mediano h2 { font-size: 24px !important; }
+.tamaño-mediano h3 { font-size: 20px !important; }
+.tamaño-mediano button { font-size: 14px !important; }
+.tamaño-mediano input { font-size: 14px !important; }
+
+.tamaño-grande { font-size: 18px !important; }
+.tamaño-grande h1 { font-size: 32px !important; }
+.tamaño-grande h2 { font-size: 28px !important; }
+.tamaño-grande h3 { font-size: 24px !important; }
+.tamaño-grande button { font-size: 16px !important; }
+.tamaño-grande input { font-size: 16px !important; }
+
+/* ===== ALTO CONTRASTE ESPECÍFICO ===== */
+.contraste-alto {
+    filter: saturate(1.5);
+}
+
+.contraste-alto p,
+.contraste-alto span,
+.contraste-alto div,
+.contraste-alto a {
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+.contraste-alto input:focus,
+.contraste-alto textarea:focus,
+.contraste-alto select:focus {
+    outline: 4px solid #000000 !important;
+    outline-offset: 2px;
+}
+
+.contraste-alto button:focus {
+    outline: 4px solid #FFFFFF !important;
+    outline-offset: 2px;
+}

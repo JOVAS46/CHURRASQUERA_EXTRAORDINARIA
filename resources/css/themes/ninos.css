@@ -1,0 +1,142 @@
+/* Tema Niños - Colorido y Amigable */
+
+/* ===== MODO CLARO NIÑOS ===== */
+html[data-modo="claro"] .tema-ninos,
+.tema-ninos.modo-claro {
+    --primary-color: #FF6B6B;
+    --secondary-color: #4ECDC4;
+    --accent-color: #FFE66D;
+    --bg-primary: #FFFACD;
+    --bg-secondary: #FFE4E1;
+    --text-primary: #2C3E50;
+    --text-secondary: #34495E;
+    --border-color: #FF6B6B;
+    background-color: #FFFACD !important;
+    color: #2C3E50 !important;
+}
+
+.tema-ninos.modo-claro .bg-gray-100 {
+    background-color: #FFF9E6 !important;
+}
+
+.tema-ninos.modo-claro .bg-white {
+    background-color: #FFFACD !important;
+}
+
+.tema-ninos.modo-claro .bg-gray-900 {
+    background: linear-gradient(180deg, #FF6B6B 0%, #FF8E8E 100%) !important;
+    color: #ffffff !important;
+}
+
+.tema-ninos.modo-claro .text-gray-700,
+.tema-ninos.modo-claro .text-gray-600,
+.tema-ninos.modo-claro .text-gray-500 {
+    color: #2C3E50 !important;
+}
+
+.tema-ninos.modo-claro .border-orange-600 {
+    border-color: #FF6B6B !important;
+}
+
+.tema-ninos.modo-claro input,
+.tema-ninos.modo-claro textarea,
+.tema-ninos.modo-claro select {
+    background-color: #FFFACD !important;
+    color: #2C3E50 !important;
+    border: 2px solid #FF6B6B !important;
+    border-radius: 8px;
+}
+
+.tema-ninos.modo-claro input:focus,
+.tema-ninos.modo-claro textarea:focus {
+    outline: 3px solid #4ECDC4 !important;
+    border-color: #4ECDC4 !important;
+}
+
+.tema-ninos.modo-claro button {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important;
+    color: white !important;
+    border-radius: 12px;
+    border: none !important;
+    font-weight: bold;
+}
+
+.tema-ninos.modo-claro button:hover {
+    background: linear-gradient(135deg, #E55555 0%, #E67E7E 100%) !important;
+    transform: scale(1.05);
+}
+
+.tema-ninos.modo-claro h1,
+.tema-ninos.modo-claro h2,
+.tema-ninos.modo-claro h3 {
+    color: #FF6B6B !important;
+    font-weight: 900;
+}
+
+/* ===== MODO OSCURO NIÑOS ===== */
+.tema-ninos.modo-oscuro {
+    --bg-primary: #1A1A2E;
+    --bg-secondary: #2D3561;
+    --text-primary: #E8F5FF;
+    --text-secondary: #B8D4FF;
+    --border-color: #FF6B6B;
+}
+
+.tema-ninos.modo-oscuro,
+.tema-ninos.modo-oscuro body {
+    background-color: #1A1A2E !important;
+    color: #E8F5FF !important;
+}
+
+.tema-ninos.modo-oscuro .bg-gray-100 {
+    background-color: #2D3561 !important;
+}
+
+.tema-ninos.modo-oscuro .bg-white {
+    background-color: #262C50 !important;
+}
+
+.tema-ninos.modo-oscuro .bg-gray-900 {
+    background: linear-gradient(180deg, #1A1A2E 0%, #2D3561 100%) !important;
+    color: #ffffff !important;
+    border-right-color: #FF6B6B !important;
+}
+
+.tema-ninos.modo-oscuro .text-gray-700,
+.tema-ninos.modo-oscuro .text-gray-600,
+.tema-ninos.modo-oscuro .text-gray-500 {
+    color: #B8D4FF !important;
+}
+
+.tema-ninos.modo-oscuro .border-orange-600 {
+    border-color: #FF8E8E !important;
+}
+
+.tema-ninos.modo-oscuro input,
+.tema-ninos.modo-oscuro textarea,
+.tema-ninos.modo-oscuro select {
+    background-color: #2D3561 !important;
+    color: #E8F5FF !important;
+    border: 2px solid #FF6B6B !important;
+    border-radius: 8px;
+}
+
+.tema-ninos.modo-oscuro input:focus,
+.tema-ninos.modo-oscuro textarea:focus {
+    outline: 3px solid #4ECDC4 !important;
+    border-color: #4ECDC4 !important;
+}
+
+.tema-ninos.modo-oscuro button {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important;
+    color: white !important;
+    border-radius: 12px;
+    border: none !important;
+    font-weight: bold;
+}
+
+.tema-ninos.modo-oscuro h1,
+.tema-ninos.modo-oscuro h2,
+.tema-ninos.modo-oscuro h3 {
+    color: #FFB3B3 !important;
+}

@@ -1,0 +1,174 @@
+Ô£à Connection successful!
+
+­ƒôè TABLES IN DATABASE:
+====================
+
+­ƒôï Table: bitacoras
+--------------------------------------------------
+  ÔÇó id_bitacora (bigint)
+  ÔÇó accion (character varying)
+  ÔÇó tabla_afectada (character varying)
+  ÔÇó fecha_hora (timestamp without time zone)
+  ÔÇó ip_address (character varying)
+  ÔÇó detalles (text)
+  ÔÇó id_usuario (bigint)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: cache
+--------------------------------------------------
+  ÔÇó key (character varying)
+  ÔÇó value (text)
+  ÔÇó expiration (integer)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: cache_locks
+--------------------------------------------------
+  ÔÇó key (character varying)
+  ÔÇó owner (character varying)
+  ÔÇó expiration (integer)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: cajas
+--------------------------------------------------
+  ÔÇó id_caja (bigint)
+  ÔÇó fecha_apertura (timestamp without time zone)
+  ÔÇó fecha_cierre (timestamp without time zone)
+  ÔÇó monto_inicial (numeric)
+  ÔÇó monto_final (numeric)
+  ÔÇó total_ingresos (numeric)
+  ÔÇó total_egresos (numeric)
+  ÔÇó estado (character varying)
+  ÔÇó id_usuario (bigint)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: categorias
+--------------------------------------------------
+  ÔÇó id_categoria (bigint)
+  ÔÇó nombre (character varying)
+  ÔÇó descripcion (text)
+  ÔÇó tipo (character varying)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 4
+
+­ƒôï Table: contador_paginas
+--------------------------------------------------
+  ÔÇó id_contador (bigint)
+  ÔÇó pagina (character varying)
+  ÔÇó total_visitas (integer)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 2
+
+­ƒôï Table: detalle_pedidos
+--------------------------------------------------
+  ÔÇó id_detalle (bigint)
+  ÔÇó cantidad (integer)
+  ÔÇó precio_unitario (numeric)
+  ÔÇó subtotal (numeric)
+  ÔÇó observaciones (text)
+  ÔÇó id_pedido (bigint)
+  ÔÇó id_producto (bigint)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: detalle_ventas
+--------------------------------------------------
+  ÔÇó id_detalle_venta (bigint)
+  ÔÇó id_venta (bigint)
+  ÔÇó id_producto (bigint)
+  ÔÇó cantidad (integer)
+  ÔÇó precio_unitario (numeric)
+  ÔÇó subtotal (numeric)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: failed_jobs
+--------------------------------------------------
+  ÔÇó id (bigint)
+  ÔÇó uuid (character varying)
+  ÔÇó connection (text)
+  ÔÇó queue (text)
+  ÔÇó payload (text)
+  ÔÇó exception (text)
+  ÔÇó failed_at (timestamp without time zone)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: insumos
+--------------------------------------------------
+  ÔÇó id_insumo (bigint)
+  ÔÇó nombre (character varying)
+  ÔÇó descripcion (text)
+  ÔÇó unidad_medida (character varying)
+  ÔÇó stock_actual (numeric)
+  ÔÇó stock_minimo (numeric)
+  ÔÇó precio_unitario (numeric)
+  ÔÇó id_proveedor (bigint)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: job_batches
+--------------------------------------------------
+  ÔÇó id (character varying)
+  ÔÇó name (character varying)
+  ÔÇó total_jobs (integer)
+  ÔÇó pending_jobs (integer)
+  ÔÇó failed_jobs (integer)
+  ÔÇó failed_job_ids (text)
+  ÔÇó options (text)
+  ÔÇó cancelled_at (integer)
+  ÔÇó created_at (integer)
+  ÔÇó finished_at (integer)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: jobs
+--------------------------------------------------
+  ÔÇó id (bigint)
+  ÔÇó queue (character varying)
+  ÔÇó payload (text)
+  ÔÇó attempts (smallint)
+  ÔÇó reserved_at (integer)
+  ÔÇó available_at (integer)
+  ÔÇó created_at (integer)
+  ÔööÔöÇ Records: 0
+
+­ƒôï Table: menu_items
+--------------------------------------------------
+  ÔÇó id_menu (bigint)
+  ÔÇó nombre (character varying)
+  ÔÇó ruta (character varying)
+  ÔÇó icono (character varying)
+  ÔÇó orden (integer)
+  ÔÇó activo (boolean)
+  ÔÇó parent_id (bigint)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 27
+
+­ƒôï Table: mesas
+--------------------------------------------------
+  ÔÇó id_mesa (bigint)
+  ÔÇó numero_mesa (integer)
+  ÔÇó capacidad (integer)
+  ÔÇó ubicacion (character varying)
+  ÔÇó estado (character varying)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 15
+
+­ƒôï Table: metodo_pagos
+--------------------------------------------------
+  ÔÇó id_metodo_pago (bigint)
+  ÔÇó nombre (character varying)
+  ÔÇó descripcion (text)
+  ÔÇó activo (boolean)
+  ÔÇó created_at (timestamp without time zone)
+  ÔÇó updated_at (timestamp without time zone)
+  ÔööÔöÇ Records: 5
