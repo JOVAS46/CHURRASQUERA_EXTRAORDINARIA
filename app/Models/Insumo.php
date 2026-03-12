@@ -32,4 +32,9 @@ class Insumo extends Model
     {
         return $this->belongsTo(Proveedor::class, 'id_proveedor');
     }
+
+    public function recetas()
+    {
+        return $this->hasMany(Receta::class, 'id_insumo');
+    }
 }
