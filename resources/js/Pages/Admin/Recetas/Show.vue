@@ -17,7 +17,7 @@
                             </Link>
                         </div>
 
-                        <div v-if="$page.props.flash.success" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+                        <div v-if="$page.props.flash?.success" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
                             {{ $page.props.flash.success }}
                         </div>
 
