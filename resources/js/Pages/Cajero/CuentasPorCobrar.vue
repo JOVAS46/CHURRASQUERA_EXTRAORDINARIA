@@ -22,18 +22,18 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div class="bg-white rounded-lg shadow p-6 border-l-4 border-yellow-500">
                         <p class="text-gray-600 text-sm font-semibold">PENDIENTES</p>
-                        <p class="text-3xl font-bold text-yellow-600">{{ pedidos.data?.length || 0 }}</p>
-                        <p class="text-gray-500 text-xs mt-1">Pedidos listos</p>
+                        <p class="text-3xl font-bold text-yellow-600">{{ tickets.data?.length || 0 }}</p>
+                        <p class="text-gray-500 text-xs mt-1">Tickets pendientes</p>
                     </div>
                 </div>
 
-                <!-- Tabla de Pedidos -->
-                <div v-if="pedidos.data && pedidos.data.length > 0" class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Tabla de Tickets -->
+                <div v-if="tickets.data && tickets.data.length > 0" class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full">
                             <thead class="bg-gradient-to-r from-orange-500 to-red-600 text-white">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold">Pedido</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Ticket</th>
                                     <th class="px-6 py-4 text-left text-sm font-semibold">Mesa</th>
                                     <th class="px-6 py-4 text-left text-sm font-semibold">Cliente</th>
                                     <th class="px-6 py-4 text-left text-sm font-semibold">Hora</th>
@@ -43,53 +43,53 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
-                                <tr v-for="pedido in pedidos.data" :key="pedido.id_pedido" class="hover:bg-gray-50 transition">
-                                    <td class="px-6 py-4 font-mono font-bold text-orange-600">PED-{{ pedido.id_pedido }}</td>
+                                <tr v-for="ticket in tickets.data" :key="ticket.id_ticket" class="hover:bg-gray-50 transition">
+                                    <td class="px-6 py-4 font-mono font-bold text-orange-600">TIC-{{ ticket.numero_ticket }}</td>
                                     <td class="px-6 py-4">
-                                        <span class="font-semibold text-gray-900">Mesa {{ pedido.mesa?.numero_mesa }}</span>
-                                        <p class="text-xs text-gray-500">{{ pedido.mesa?.ubicacion }}</p>
+                                        <span class="font-semibold text-gray-900">Mesa {{ ticket.pedido?.mesa?.numero_mesa }}</span>
+                                        <p class="text-xs text-gray-500">{{ ticket.pedido?.mesa?.ubicacion }}</p>
                                     </td>
                                     <td class="px-6 py-4 text-gray-700">
-                                        {{ pedido.usuario?.nombre || 'Sin asignar' }}
+                                        {{ ticket.pedido?.usuario?.nombre || 'Sin asignar' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-600">
-                                        🕐 {{ formatTime(pedido.fecha_pedido) }}
+                                        🕐 {{ formatTime(ticket.fecha_emision) }}
                                     </td>
                                     <td class="px-6 py-4 text-right font-bold text-orange-600">
-                                        Bs. {{ parseFloat(pedido.total).toFixed(2) }}
+                                        Bs. {{ parseFloat(ticket.pedido?.total || 0).toFixed(2) }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <span v-if="obtenerEstadoPago(pedido)" :class="[
+                                        <span v-if="obtenerEstadoPago(ticket)" :class="[
                                             'px-3 py-1 rounded-full text-xs font-bold',
-                                            obtenerEstadoPago(pedido).estado === 'pagado'
+                                            obtenerEstadoPago(ticket).estado === 'pagado'
                                                 ? 'bg-green-100 text-green-800'
                                                 : 'bg-yellow-100 text-yellow-800'
                                         ]">
-                                            {{ obtenerEstadoPago(pedido).texto }}
+                                            {{ obtenerEstadoPago(ticket).texto }}
                                         </span>
                                         <span v-else class="text-gray-500 text-xs">⏳ Sin pago</span>
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <div class="flex gap-2 flex-wrap justify-center">
                                             <button 
-                                                @click="abrirModalPago(pedido)"
+                                                @click="abrirModalPago(ticket)"
                                                 class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
                                                 💰 Efectivo
                                             </button>
                                             <button 
-                                                @click="generarQR(pedido)"
+                                                @click="generarQR(ticket)"
                                                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
                                                 📱 QR
                                             </button>
                                             <button 
-                                                v-if="obtenerEstadoPago(pedido)?.nro_transaccion"
-                                                @click="verificarEstadoDesdeTabla(pedido)"
-                                                :disabled="pagoEnVerificacion[pedido.id_pedido]"
+                                                v-if="obtenerEstadoPago(ticket)?.nro_transaccion"
+                                                @click="verificarEstadoDesdeTabla(ticket)"
+                                                :disabled="pagoEnVerificacion[ticket.id_ticket]"
                                                 class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
-                                                {{ pagoEnVerificacion[pedido.id_pedido] ? '✓ Verificando...' : '✓ Revisar' }}
+                                                {{ pagoEnVerificacion[ticket.id_ticket] ? '✓ Verificando...' : '✓ Revisar' }}
                                             </button>
                                         </div>
                                     </td>
@@ -99,15 +99,15 @@
                     </div>
                 </div>
 
-                <!-- Sin pedidos -->
+                <!-- Sin tickets -->
                 <div v-else class="bg-white rounded-lg shadow-lg p-12 text-center">
-                    <p class="text-gray-500 text-lg mb-4">✓ No hay pedidos pendientes de cobro</p>
-                    <p class="text-gray-400">Todos los pedidos han sido entregados</p>
+                    <p class="text-gray-500 text-lg mb-4">✓ No hay tickets pendientes de cobro</p>
+                    <p class="text-gray-400">Todos los tickets han sido pagados</p>
                 </div>
 
                 <!-- Paginación -->
-                <div v-if="pedidos.links" class="mt-6 flex justify-center gap-2">
-                    <template v-for="link in pedidos.links" :key="link.label">
+                <div v-if="tickets.links" class="mt-6 flex justify-center gap-2">
+                    <template v-for="link in tickets.links" :key="link.label">
                         <Link 
                             v-if="link.url"
                             :href="link.url"
@@ -141,10 +141,10 @@
 
                     <div v-if="pedidoSeleccionado" class="mb-6 bg-gray-50 p-4 rounded-lg">
                         <p class="text-sm text-gray-600 mb-2">
-                            <span class="font-semibold">Pedido:</span> PED-{{ pedidoSeleccionado.id_pedido }}
+                            <span class="font-semibold">Ticket:</span> TIC-{{ pedidoSeleccionado.numero_ticket }}
                         </p>
                         <p class="text-xl font-bold text-blue-600">
-                            Total: Bs. {{ parseFloat(pedidoSeleccionado.total).toFixed(2) }}
+                            Total: Bs. {{ parseFloat(pedidoSeleccionado.pedido?.total || 0).toFixed(2) }}
                         </p>
                     </div>
 
@@ -164,7 +164,7 @@
                         <!-- Info -->
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-800">
                             <p class="font-semibold mb-2">📋 Instrucciones:</p>
-                            <p class="mb-2">1. El cliente escanea el código QR con su billetera digital</p>
+                            <p class="mb-2">1. El cajero escanea el código QR con su billetera digital</p>
                             <p class="mb-2">2. Completa el pago en su aplicación</p>
                             <p>3. El sistema verifica automáticamente en 2 segundos</p>
                         </div>
@@ -266,13 +266,13 @@
 
                     <div v-if="pedidoSeleccionado" class="mb-6 bg-gray-50 p-4 rounded-lg">
                         <p class="text-sm text-gray-600 mb-2">
-                            <span class="font-semibold">Pedido:</span> PED-{{ pedidoSeleccionado.id_pedido }}
+                            <span class="font-semibold">Ticket:</span> TIC-{{ pedidoSeleccionado.numero_ticket }}
                         </p>
                         <p class="text-sm text-gray-600 mb-2">
-                            <span class="font-semibold">Mesa:</span> {{ pedidoSeleccionado.mesa?.numero_mesa }}
+                            <span class="font-semibold">Mesa:</span> {{ pedidoSeleccionado.pedido?.mesa?.numero_mesa }}
                         </p>
                         <p class="text-xl font-bold text-orange-600">
-                            Total: Bs. {{ parseFloat(pedidoSeleccionado.total).toFixed(2) }}
+                            Total: Bs. {{ parseFloat(pedidoSeleccionado.pedido?.total || 0).toFixed(2) }}
                         </p>
                     </div>
 
@@ -347,7 +347,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import Layout from '@/Layouts/Layout.vue';
 
 const props = defineProps({
-    pedidos: Object,
+    tickets: Object,
     metodosPago: Array,
 });
 
@@ -373,10 +373,10 @@ const formularioPago = reactive({
 
 const erroresPago = ref({});
 
-const abrirModalPago = (pedido) => {
-    pedidoSeleccionado.value = pedido;
+const abrirModalPago = (ticket) => {
+    pedidoSeleccionado.value = ticket;
     formularioPago.id_metodo_pago = '';
-    formularioPago.monto = parseFloat(pedido.total);
+    formularioPago.monto = parseFloat(ticket.pedido?.total || 0);
     formularioPago.nro_transaccion = '';
     erroresPago.value = {};
     mostrarModal.value = true;
@@ -406,7 +406,7 @@ const enviarPago = () => {
 
     cargandoPago.value = true;
 
-    router.post(`/cajero/registrar-pago/${pedidoSeleccionado.value.id_pedido}`, {
+    router.post(`/cajero/registrar-pago-ticket/${pedidoSeleccionado.value.id_ticket}`, {
         id_metodo_pago: parseInt(formularioPago.id_metodo_pago),
         monto: formularioPago.monto,
         nro_transaccion: formularioPago.nro_transaccion,
@@ -514,8 +514,8 @@ const reanudarVerificacion = () => {
     }, 2000);
 };
 
-const generarQR = async (pedido) => {
-    pedidoSeleccionado.value = pedido;
+const generarQR = async (ticket) => {
+    pedidoSeleccionado.value = ticket;
     cargandoQR.value = true;
     estadoPagoActual.value = 'esperando';
     pollingPausado.value = false;
@@ -523,7 +523,7 @@ const generarQR = async (pedido) => {
     nroTransaccionActual.value = null;
 
     try {
-        const response = await fetch(`/cajero/generar-qr/${pedido.id_pedido}`, {
+        const response = await fetch(`/cajero/generar-qr-ticket/${ticket.id_ticket}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -569,15 +569,15 @@ const descargarQR = () => {
 
     const link = document.createElement('a');
     link.href = 'data:image/png;base64,' + qrGenerado.value;
-    link.download = `QR-Pedido-${pedidoSeleccionado.value.id_pedido}.png`;
+    link.download = `QR-Ticket-${pedidoSeleccionado.value.numero_ticket}.png`;
     link.click();
 };
 
-const obtenerEstadoPago = (pedido) => {
+const obtenerEstadoPago = (ticket) => {
     // Obtener el primer pago del pedido (a través de venta)
-    if (!pedido.ventas || pedido.ventas.length === 0) return null;
+    if (!ticket.pedido?.ventas || ticket.pedido.ventas.length === 0) return null;
     
-    const venta = pedido.ventas[0];
+    const venta = ticket.pedido.ventas[0];
     if (!venta.pagos || venta.pagos.length === 0) return null;
     
     const pago = venta.pagos[0];
@@ -590,16 +590,16 @@ const obtenerEstadoPago = (pedido) => {
     };
 };
 
-const verificarEstadoDesdeTabla = async (pedido) => {
-    const estadoPago = obtenerEstadoPago(pedido);
+const verificarEstadoDesdeTabla = async (ticket) => {
+    const estadoPago = obtenerEstadoPago(ticket);
     if (!estadoPago?.nro_transaccion) {
         alert('No hay transacción para verificar');
         return;
     }
     
-    console.log('🔍 Verificando estado desde tabla:', pedido.id_pedido, 'Transacción:', estadoPago.nro_transaccion);
+    console.log('🔍 Verificando estado desde tabla:', ticket.id_ticket, 'Transacción:', estadoPago.nro_transaccion);
     
-    pagoEnVerificacion.value[pedido.id_pedido] = true;
+    pagoEnVerificacion.value[ticket.id_ticket] = true;
 
     try {
         const response = await fetch(`/cajero/verificar-transaccion/${estadoPago.nro_transaccion}`, {
@@ -624,7 +624,7 @@ const verificarEstadoDesdeTabla = async (pedido) => {
         console.error('❌ Error verificando:', error);
         alert('Error al verificar pago');
     } finally {
-        pagoEnVerificacion.value[pedido.id_pedido] = false;
+        pagoEnVerificacion.value[ticket.id_ticket] = false;
     }
 };
 

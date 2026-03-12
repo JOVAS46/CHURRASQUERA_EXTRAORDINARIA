@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedido;
+use App\Models\Ticket;
 use App\Models\Venta;
 use App\Models\Pago;
 use App\Models\MetodoPago;
+use App\Models\Bitacora;
 use App\Services\PagoFacilService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,38 +15,72 @@ use Inertia\Inertia;
 
 class CajeroController extends Controller
 {
-    public function cuentasPorCobrar()
+    public function cuentasPorCobrar(Request $request)
     {
-        // Obtener pedidos listos para cobrar (estado=listo)
-        $pedidos = Pedido::with(['mesa', 'usuario', 'detalles.producto', 'ventas.pagos'])
-            ->where('estado', 'listo')
-            ->orderBy('fecha_pedido', 'desc')
-            ->paginate(15);
+        // Obtener tickets pendientes de cobrar (estado='pendiente' o 'impreso' sin pago)
+        $query = Ticket::with([
+            'pedido' => function($q) {
+                $q->with(['mesa', 'usuario', 'detalles.producto', 'ventas.pagos']);
+            }
+        ])->whereIn('estado', ['pendiente', 'impreso'])  // Tickets que no están anulados
+        ->whereHas('pedido', function($q) {
+            $q->whereIn('estado', ['listo', 'completado']);  // Pedidos listos o completados
+        });
+
+        // Filtros
+        if ($request->has('numero_ticket') && $request->numero_ticket) {
+            $query->where('numero_ticket', 'like', '%' . $request->numero_ticket . '%');
+        }
+
+        if ($request->has('numero_mesa') && $request->numero_mesa) {
+            $query->whereHas('pedido.mesa', function($q) use ($request) {
+                $q->where('numero_mesa', $request->numero_mesa);
+            });
+        }
+
+        $tickets = $query->orderBy('fecha_emision', 'desc')->paginate(15);
 
         // Obtener métodos de pago disponibles
         $metodosPago = MetodoPago::where('activo', 1)->get();
 
+        // Registrar en bitácora
+        Bitacora::registrarAccion(
+            accion: 'listar_cuentas',
+            tabla_afectada: 'tickets',
+            detalles: 'Cajero consultó cuentas por cobrar'
+        );
+
         return Inertia::render('Cajero/CuentasPorCobrar', [
-            'pedidos' => $pedidos,
+            'tickets' => $tickets,
             'metodosPago' => $metodosPago,
+            'filtros' => $request->all(),
         ]);
     }
 
     public function registrarPago(Request $request, $id)
     {
         try {
-            // Obtener el pedido por ID
-            $pedido = Pedido::findOrFail($id);
+            // Obtener el ticket por ID
+            $ticket = Ticket::with(['pedido' => function($q) {
+                $q->with(['mesa', 'usuario', 'detalles', 'ventas']);
+            }])->findOrFail($id);
             
+            $pedido = $ticket->pedido;
+
             $validated = $request->validate([
                 'id_metodo_pago' => 'required|integer|exists:metodo_pagos,id_metodo_pago',
                 'monto' => 'required|numeric|min:0.01',
                 'nro_transaccion' => 'nullable|string|max:100',
             ]);
 
-            // Verificar que el pedido esté en estado 'listo'
-            if ($pedido->estado !== 'listo') {
-                return back()->with('error', '❌ El pedido no está listo para cobrar');
+            // Verificar que el pedido esté en estado 'listo' o 'completado'
+            if (!in_array($pedido->estado, ['listo', 'completado'])) {
+                return back()->with('error', '❌ El pedido no está listo o completado para cobrar');
+            }
+
+            // Verificar que el monto sea correcto (debe ser igual o mayor al total)
+            if ($validated['monto'] < $pedido->total) {
+                return back()->with('error', "❌ El monto ($" . $validated['monto'] . ") es menor al total ($" . $pedido->total . ")");
             }
 
             // Verificar si ya tiene venta
@@ -78,10 +114,26 @@ class CajeroController extends Controller
             // Actualizar estado de pedido a entregado
             $pedido->update(['estado' => 'entregado']);
 
+            // Marcar ticket como impreso cuando se paga
+            $ticket->update(['estado' => 'impreso']);
+
             // Liberar mesa
             $pedido->mesa->update(['estado' => 'disponible']);
 
-            return back()->with('success', "✅ Pago registrado exitosamente. Pedido #{$pedido->id_pedido} entregado");
+            // Registrar en bitácora
+            Bitacora::registrarAccion(
+                accion: 'registrar_pago',
+                tabla_afectada: 'pagos',
+                detalles: json_encode([
+                    'id_ticket' => $ticket->id_ticket,
+                    'numero_ticket' => $ticket->numero_ticket,
+                    'id_pedido' => $pedido->id_pedido,
+                    'monto' => $validated['monto'],
+                    'id_metodo_pago' => $validated['id_metodo_pago'],
+                ])
+            );
+
+            return back()->with('success', "✅ Pago registrado exitosamente. Ticket #{$ticket->numero_ticket} pagado");
         } catch (\Exception $e) {
             return back()->with('error', '❌ Error al registrar pago: ' . $e->getMessage());
         }
@@ -121,8 +173,14 @@ class CajeroController extends Controller
     public function generarQR(Request $request, $id)
     {
         try {
-            // Obtener el pedido por ID
-            $pedido = Pedido::findOrFail($id);
+            // Intenta obtener primero como Ticket, luego como Pedido
+            $ticket = Ticket::where('id_ticket', $id)->orWhere('numero_ticket', $id)->first();
+            
+            if ($ticket) {
+                $pedido = $ticket->pedido;
+            } else {
+                $pedido = Pedido::findOrFail($id);
+            }
             
             $validated = $request->validate([
                 'cliente_email' => 'nullable|email',

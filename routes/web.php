@@ -86,6 +86,9 @@ Route::middleware(['auth'])->group(function () {
     
     // Tickets
     Route::resource('tickets', TicketController::class);
+    Route::post('/tickets/generar-automatico/{pedido}', [TicketController::class, 'generarAutomatico'])->name('tickets.generarAutomatico');
+    Route::get('/tickets/{ticket}/exportar-pdf', [TicketController::class, 'exportarPDF'])->name('tickets.exportarPDF');
+    Route::get('/tickets-reporte', [TicketController::class, 'reporte'])->name('tickets.reporte');
 
     // Admin - Usuarios Management
     Route::get('/admin/usuarios', [UserController::class, 'index'])->name('admin.usuarios.index');
@@ -112,10 +115,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cocina/pedidos', [CocinaController::class, 'pedidos'])->name('cocina.pedidos');
     Route::patch('/cocina/pedidos/{pedido}', [CocinaController::class, 'updateEstado'])->name('cocina.updateEstado');
 
-    // Cajero - Cuentas por Cobrar
+    // Cajero - Cuentas por Cobrar (Tickets)
     Route::get('/cajero/cuentas-por-cobrar', [CajeroController::class, 'cuentasPorCobrar'])->name('cajero.cuentasPorCobrar');
-    Route::post('/cajero/registrar-pago/{id}', [CajeroController::class, 'registrarPago'])->name('cajero.registrarPago');
+    Route::post('/cajero/registrar-pago-ticket/{id}', [CajeroController::class, 'registrarPago'])->name('cajero.registrarPagoTicket');
     Route::post('/cajero/generar-qr/{id}', [CajeroController::class, 'generarQR'])->name('cajero.generarQR');
+    Route::post('/cajero/generar-qr-ticket/{id}', [CajeroController::class, 'generarQR'])->name('cajero.generarQRTicket');
     Route::get('/cajero/verificar-estado/{id}', [CajeroController::class, 'verificarEstadoPedido'])->name('cajero.verificarEstado');
     Route::get('/cajero/verificar-transaccion/{nro_transaccion}', [CajeroController::class, 'verificarTransaccion'])->name('cajero.verificarTransaccion');
     Route::get('/cajero/ventas-del-dia', [CajeroController::class, 'ventasDelDia'])->name('cajero.ventasDelDia');

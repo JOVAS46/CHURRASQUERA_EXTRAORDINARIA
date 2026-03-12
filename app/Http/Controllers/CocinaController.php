@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedido;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -37,6 +38,26 @@ class CocinaController extends Controller
         ]);
 
         $pedido->update(['estado' => $validated['estado']]);
+
+        // Si se marca como listo, crear ticket automáticamente
+        if ($validated['estado'] === 'listo') {
+            // Verificar que no exista ticket ya
+            $ticketExiste = Ticket::where('id_pedido', $pedido->id_pedido)->first();
+            
+            if (!$ticketExiste) {
+                // Generar número de ticket
+                $ultimoTicket = Ticket::orderBy('id_ticket', 'desc')->first();
+                $nuevoNumero = ($ultimoTicket ? $ultimoTicket->numero_ticket : 0) + 1;
+                
+                Ticket::create([
+                    'numero_ticket' => $nuevoNumero,
+                    'tipo' => 'cocina',
+                    'fecha_emision' => now(),
+                    'id_pedido' => $pedido->id_pedido,
+                    'estado' => 'pendiente',
+                ]);
+            }
+        }
 
         // Si está entregado, liberar la mesa
         if ($validated['estado'] === 'entregado') {
