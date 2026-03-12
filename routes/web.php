@@ -24,6 +24,7 @@ use App\Http\Controllers\ClienteReservaController;
 use App\Http\Controllers\CajeroController;
 use App\Http\Controllers\PreferenceController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\RoleController;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -97,6 +98,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/usuarios/{usuario}/edit', [UserController::class, 'edit'])->name('admin.usuarios.edit');
     Route::patch('/admin/usuarios/{usuario}', [UserController::class, 'update'])->name('admin.usuarios.update');
     Route::delete('/admin/usuarios/{usuario}', [UserController::class, 'destroy'])->name('admin.usuarios.destroy');
+
+    // Admin - Roles Management (Solo Gerente puede editar/eliminar)
+    Route::get('/admin/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/admin/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::patch('/admin/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/admin/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
     // Ventas
     Route::get('/ventas', [VentasController::class, 'index'])->name('ventas.index');
