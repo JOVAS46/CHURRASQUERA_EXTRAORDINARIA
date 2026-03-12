@@ -25,6 +25,11 @@ use App\Http\Controllers\CajeroController;
 use App\Http\Controllers\PreferenceController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CheckTableController;
+use App\Http\Controllers\InsumoController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\RecetaController;
+use App\Http\Controllers\SetupMenuController;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -56,6 +61,17 @@ Route::get('/api/test/buscar', [SearchController::class, 'testBuscar']);
 Route::get('/api/search', [SearchController::class, 'search']);
 Route::get('/api/mesas-disponibles', [ReservaController::class, 'obtenerMesasDisponibles']);
 Route::get('/api/pedido-pendiente', [PagoController::class, 'obtenerPedidoPendiente']);
+
+// DEBUG - Verificar estructura de tablas
+Route::get('/debug/table/recetas', [CheckTableController::class, 'recetas']);
+Route::get('/debug/table/insumos', [CheckTableController::class, 'insumos']);
+Route::get('/debug/table/proveedores', [CheckTableController::class, 'proveedores']);
+Route::get('/debug/table/rol_menu', [CheckTableController::class, 'rolMenu']);
+Route::get('/debug/table/menu_items', [CheckTableController::class, 'menuItems']);
+
+// SETUP - Configurar menú e insumos/proveedores/recetas (ejecutar una sola vez)
+Route::get('/setup/menu', [SetupMenuController::class, 'setupMenu']);
+Route::get('/setup/permisos', [SetupMenuController::class, 'setupPermisos']);
 
 // Rutas protegidas
 Route::middleware(['auth'])->group(function () {
@@ -104,6 +120,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::patch('/admin/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
     Route::delete('/admin/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+    // Admin - Insumos (Solo Admin y Cocinero)
+    Route::resource('insumos', InsumoController::class);
+
+    // Admin - Proveedores (Solo Admin y Cocinero)
+    Route::resource('proveedores', ProveedorController::class);
+
+    // Admin - Recetas (Solo Admin y Cocinero)
+    Route::get('/recetas', [RecetaController::class, 'index'])->name('recetas.index');
+    Route::get('/recetas/producto/{producto}', [RecetaController::class, 'show'])->name('recetas.show');
+    Route::get('/recetas/producto/{producto}/create', [RecetaController::class, 'create'])->name('recetas.create');
+    Route::post('/recetas/producto/{producto}', [RecetaController::class, 'store'])->name('recetas.store');
+    Route::get('/recetas/producto/{producto}/{receta}/edit', [RecetaController::class, 'edit'])->name('recetas.edit');
+    Route::patch('/recetas/producto/{producto}/{receta}', [RecetaController::class, 'update'])->name('recetas.update');
+    Route::delete('/recetas/producto/{producto}/{receta}', [RecetaController::class, 'destroy'])->name('recetas.destroy');
 
     // Ventas
     Route::get('/ventas', [VentasController::class, 'index'])->name('ventas.index');
