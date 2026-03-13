@@ -11,11 +11,11 @@
                     </Link>
                 </div>
 
-                <div v-if="$page.props.flash.success" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+                <div v-if="$page.props.flash?.success" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
                     {{ $page.props.flash.success }}
                 </div>
 
-                <div v-if="$page.props.flash.error" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+                <div v-if="$page.props.flash?.error" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
                     {{ $page.props.flash.error }}
                 </div>
 
