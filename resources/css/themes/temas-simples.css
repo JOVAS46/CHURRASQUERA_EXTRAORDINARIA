@@ -1,79 +1,226 @@
 /* ============================================
-   SISTEMA SISTEMA DE TEMAS SIMPLIFICADO
+   SISTEMA DE TEMAS SIMPLIFICADO - CAMBIOS VISUALES DRAMÁTICOS
    ============================================= */
 
-/* ===== TEMA NIÑOS ===== */
-.tema-ninos.modo-claro {
-    background-color: #FFFACD !important;
-    color: #2C3E50 !important;
+/* SELECTORES BASADOS EN data-tema Y data-modo */
+
+/* ===== TEMA NIÑOS CLARO ===== */
+[data-tema="ninos"][data-modo="claro"],
+[data-tema="ninos"][data-modo="claro"] * {
+    transition: all 0.5s ease !important;
 }
 
-.tema-ninos.modo-claro aside { background: linear-gradient(180deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; }
-.tema-ninos.modo-claro aside * { color: white !important; }
-.tema-ninos.modo-claro h1, .tema-ninos.modo-claro h2, .tema-ninos.modo-claro h3 { color: #FF6B6B !important; }
-.tema-ninos.modo-claro input, .tema-ninos.modo-claro textarea, .tema-ninos.modo-claro select { background-color: #FFFACD !important; color: #2C3E50 !important; border-color: #FF6B6B !important; }
-.tema-ninos.modo-claro button { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; border: none !important; }
-.tema-ninos.modo-claro .bg-white { background-color: #FFFACD !important; color: #2C3E50 !important; }
-.tema-ninos.modo-claro .bg-gray-900 { background: linear-gradient(180deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; }
-.tema-ninos.modo-claro .border-orange-600 { border-color: #FF6B6B !important; }
-
-.tema-ninos.modo-oscuro {
-    background-color: #1A1A2E !important;
-    color: #E8F5FF !important;
+[data-tema="ninos"][data-modo="claro"] {
+    background: linear-gradient(135deg, #FFD700 0%, #FF69B4 50%, #87CEEB 100%) !important;
+    color: #FFFFFF !important;
+    min-height: 100vh;
 }
 
-.tema-ninos.modo-oscuro aside { background: linear-gradient(180deg, #1A1A2E 0%, #2D3561 100%) !important; color: white !important; }
-.tema-ninos.modo-oscuro aside * { color: white !important; }
-.tema-ninos.modo-oscuro h1, .tema-ninos.modo-oscuro h2, .tema-ninos.modo-oscuro h3 { color: #FFB3B3 !important; }
-.tema-ninos.modo-oscuro input, .tema-ninos.modo-oscuro textarea, .tema-ninos.modo-oscuro select { background-color: #2D3561 !important; color: #E8F5FF !important; border-color: #FF6B6B !important; }
-.tema-ninos.modo-oscuro button { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%) !important; color: white !important; border: none !important; }
-.tema-ninos.modo-oscuro .bg-white { background-color: #2D3561 !important; color: #E8F5FF !important; }
-.tema-ninos.modo-oscuro .bg-gray-900 { background: linear-gradient(180deg, #1A1A2E 0%, #2D3561 100%) !important; color: white !important; }
-.tema-ninos.modo-oscuro .border-orange-600 { border-color: #FF6B6B !important; }
-
-/* ===== TEMA ADULTOS ===== */
-.tema-adultos.modo-claro {
-    background-color: #ECEFF1 !important;
-    color: #1A237E !important;
+[data-tema="ninos"][data-modo="claro"] * { 
+    color: #FF1493 !important;
 }
 
-.tema-adultos.modo-claro aside { background: linear-gradient(180deg, #1A237E 0%, #283593 100%) !important; color: white !important; }
-.tema-adultos.modo-claro aside * { color: white !important; }
-.tema-adultos.modo-claro h1, .tema-adultos.modo-claro h2, .tema-adultos.modo-claro h3 { color: #1A237E !important; }
-.tema-adultos.modo-claro input, .tema-adultos.modo-claro textarea, .tema-adultos.modo-claro select { background-color: #FFFFFF !important; color: #1A237E !important; border-color: #90CAF9 !important; }
-.tema-adultos.modo-claro button { background-color: #3498DB !important; color: white !important; border: none !important; }
-.tema-adultos.modo-claro .bg-white { background-color: #FFFFFF !important; color: #1A237E !important; }
-.tema-adultos.modo-claro .bg-gray-900 { background: linear-gradient(180deg, #1A237E 0%, #283593 100%) !important; color: white !important; }
-.tema-adultos.modo-claro .border-orange-600 { border-color: #3498DB !important; }
-
-.tema-adultos.modo-oscuro {
-    background-color: #0D1B2A !important;
-    color: #E0E1FF !important;
+[data-tema="ninos"][data-modo="claro"] aside,
+[data-tema="ninos"][data-modo="claro"] aside * { 
+    background: linear-gradient(180deg, #FF1493 0%, #FF69B4 100%) !important; 
+    color: white !important !important;
 }
 
-.tema-adultos.modo-oscuro aside { background: linear-gradient(180deg, #0D1B2A 0%, #1B263B 100%) !important; color: white !important; }
-.tema-adultos.modo-oscuro aside * { color: white !important; }
-.tema-adultos.modo-oscuro h1, .tema-adultos.modo-oscuro h2, .tema-adultos.modo-oscuro h3 { color: #90CAF9 !important; }
-.tema-adultos.modo-oscuro input, .tema-adultos.modo-oscuro textarea, .tema-adultos.modo-oscuro select { background-color: #1B263B !important; color: #E0E1FF !important; border-color: #42A5F5 !important; }
-.tema-adultos.modo-oscuro button { background-color: #3498DB !important; color: white !important; border: none !important; }
-.tema-adultos.modo-oscuro .bg-white { background-color: #1B263B !important; color: #E0E1FF !important; }
-.tema-adultos.modo-oscuro .bg-gray-900 { background: linear-gradient(180deg, #0D1B2A 0%, #1B263B 100%) !important; color: white !important; }
-.tema-adultos.modo-oscuro .border-orange-600 { border-color: #64B5F6 !important; }
-
-/* ===== ALTO CONTRASTE ===== */
-.tema-alto_contraste {
-    background-color: #FFFFFF !important;
-    color: #000000 !important;
+[data-tema="ninos"][data-modo="claro"] h1, 
+[data-tema="ninos"][data-modo="claro"] h2, 
+[data-tema="ninos"][data-modo="claro"] h3 { 
+    color: #FF1493 !important;
+    font-weight: 900 !important;
 }
 
-.tema-alto_contraste * { background-color: #FFFFFF !important; color: #000000 !important; border-color: #000000 !important; }
-.tema-alto_contraste aside { background-color: #000000 !important; color: white !important; border-right: 3px solid #000000 !important; }
-.tema-alto_contraste aside * { color: white !important; }
-.tema-alto_contraste h1, .tema-alto_contraste h2, .tema-alto_contraste h3 { color: #000000 !important; font-weight: 900 !important; }
-.tema-alto_contraste input, .tema-alto_contraste textarea, .tema-alto_contraste select { background-color: #FFFFFF !important; color: #000000 !important; border: 3px solid #000000 !important; }
-.tema-alto_contraste button { background-color: #000000 !important; color: #FFFFFF !important; border: 3px solid #000000 !important; font-weight: 900 !important; }
-.tema-alto_contraste .bg-white { background-color: #FFFFFF !important; color: #000000 !important; }
-.tema-alto_contraste .bg-gray-900 { background-color: #000000 !important; color: white !important; }
+[data-tema="ninos"][data-modo="claro"] input, 
+[data-tema="ninos"][data-modo="claro"] textarea, 
+[data-tema="ninos"][data-modo="claro"] select { 
+    background-color: #FFFFFF !important; 
+    color: #FF1493 !important; 
+    border: 3px solid #FF1493 !important;
+    border-radius: 10px !important;
+}
+
+[data-tema="ninos"][data-modo="claro"] button { 
+    background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%) !important; 
+    color: white !important; 
+    border: none !important;
+    border-radius: 15px !important;
+    font-weight: 900 !important;
+}
+
+[data-tema="ninos"][data-modo="claro"] .bg-white { 
+    background-color: #FFFFFF !important; 
+    color: #FF1493 !important;
+    border-radius: 15px !important;
+    box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3) !important;
+}
+
+/* ===== TEMA ADULTOS CLARO ===== */
+[data-tema="adultos"][data-modo="claro"],
+[data-tema="adultos"][data-modo="claro"] * {
+    transition: all 0.5s ease !important;
+}
+
+[data-tema="adultos"][data-modo="claro"] {
+    background-color: #F5F5F5 !important;
+    color: #1F1F1F !important;
+    min-height: 100vh;
+}
+
+[data-tema="adultos"][data-modo="claro"] * {
+    color: #1F1F1F !important;
+}
+
+[data-tema="adultos"][data-modo="claro"] aside,
+[data-tema="adultos"][data-modo="claro"] aside * { 
+    background: linear-gradient(180deg, #1A1A1A 0%, #2D2D2D 100%) !important; 
+    color: #E0E0E0 !important !important;
+}
+
+[data-tema="adultos"][data-modo="claro"] h1, 
+[data-tema="adultos"][data-modo="claro"] h2, 
+[data-tema="adultos"][data-modo="claro"] h3 { 
+    color: #1A1A1A !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+[data-tema="adultos"][data-modo="claro"] input, 
+[data-tema="adultos"][data-modo="claro"] textarea, 
+[data-tema="adultos"][data-modo="claro"] select { 
+    background-color: #FFFFFF !important; 
+    color: #1F1F1F !important; 
+    border: 1px solid #CCCCCC !important;
+    border-radius: 4px !important;
+}
+
+[data-tema="adultos"][data-modo="claro"] button { 
+    background-color: #2D2D2D !important; 
+    color: white !important; 
+    border: 1px solid #444 !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+}
+
+[data-tema="adultos"][data-modo="claro"] .bg-white { 
+    background-color: #FFFFFF !important; 
+    color: #1F1F1F !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== TEMA NIÑOS OSCURO ===== */
+[data-tema="ninos"][data-modo="oscuro"],
+[data-tema="ninos"][data-modo="oscuro"] * {
+    transition: all 0.5s ease !important;
+}
+
+[data-tema="ninos"][data-modo="oscuro"] {
+    background: linear-gradient(135deg, #1A0033 0%, #330066 50%, #0066CC 100%) !important;
+    color: #FFFFFF !important;
+    min-height: 100vh;
+}
+
+[data-tema="ninos"][data-modo="oscuro"] * {
+    color: #FFD700 !important;
+}
+
+[data-tema="ninos"][data-modo="oscuro"] aside,
+[data-tema="ninos"][data-modo="oscuro"] aside * { 
+    background: linear-gradient(180deg, #FF1493 0%, #FF69B4 100%) !important; 
+    color: white !important !important;
+}
+
+[data-tema="ninos"][data-modo="oscuro"] h1, 
+[data-tema="ninos"][data-modo="oscuro"] h2, 
+[data-tema="ninos"][data-modo="oscuro"] h3 { 
+    color: #FFD700 !important;
+    font-weight: 900 !important;
+}
+
+[data-tema="ninos"][data-modo="oscuro"] input,  
+[data-tema="ninos"][data-modo="oscuro"] textarea, 
+[data-tema="ninos"][data-modo="oscuro"] select { 
+    background-color: #1A0033 !important; 
+    color: #FFD700 !important;
+    border: 3px solid #FF1493 !important;
+    border-radius: 10px !important;
+}
+
+[data-tema="ninos"][data-modo="oscuro"] button { 
+    background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%) !important; 
+    color: white !important; 
+    border: none !important;
+    border-radius: 15px !important;
+    font-weight: 900 !important;
+}
+
+[data-tema="ninos"][data-modo="oscuro"] .bg-white { 
+    background-color: #330066 !important; 
+    color: #FFF !important;
+    border-radius: 15px !important;
+    box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3) !important;
+}
+
+/* ===== TEMA ADULTOS OSCURO ===== */
+[data-tema="adultos"][data-modo="oscuro"],
+[data-tema="adultos"][data-modo="oscuro"] * {
+    transition: all 0.5s ease !important;
+}
+
+[data-tema="adultos"][data-modo="oscuro"] {
+    background-color: #121212 !important;
+    color: #E0E0E0 !important;
+    min-height: 100vh;
+}
+
+[data-tema="adultos"][data-modo="oscuro"] * {
+    color: #E0E0E0 !important;
+}
+
+[data-tema="adultos"][data-modo="oscuro"] aside,
+[data-tema="adultos"][data-modo="oscuro"] aside * { 
+    background: linear-gradient(180deg, #0A0A0A 0%, #1F1F1F 100%) !important; 
+    color: #E0E0E0 !important !important;
+}
+
+[data-tema="adultos"][data-modo="oscuro"] h1, 
+[data-tema="adultos"][data-modo="oscuro"] h2, 
+[data-tema="adultos"][data-modo="oscuro"] h3 { 
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+[data-tema="adultos"][data-modo="oscuro"] input, 
+[data-tema="adultos"][data-modo="oscuro"] textarea, 
+[data-tema="adultos"][data-modo="oscuro"] select { 
+    background-color: #1F1F1F !important; 
+    color: #E0E0E0 !important;
+    border: 1px solid #333 !important;
+    border-radius: 4px !important;
+}
+
+[data-tema="adultos"][data-modo="oscuro"] button { 
+    background-color: #2D2D2D !important; 
+    color: white !important; 
+    border: 1px solid #444 !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+}
+
+[data-tema="adultos"][data-modo="oscuro"] .bg-white { 
+    background-color: #1F1F1F !important; 
+    color: #E0E0E0 !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
 
 /* ===== TAMAÑO DE FUENTE ===== */
 .tamaño-pequeno { font-size: 13px !important; }
@@ -97,7 +244,21 @@
 .tamaño-grande button { font-size: 16px !important; }
 .tamaño-grande input { font-size: 16px !important; }
 
-/* ===== ALTO CONTRASTE ESPECÍFICO ===== */
+/* ===== CONTRASTE ALTO ===== */
+.contraste-alto {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}
+
+.contraste-alto * { background-color: #FFFFFF !important; color: #000000 !important; border-color: #000000 !important; }
+.contraste-alto aside { background-color: #000000 !important; color: white !important; border-right: 3px solid #000000 !important; }
+.contraste-alto aside * { color: white !important; }
+.contraste-alto h1, .contraste-alto h2, .contraste-alto h3 { color: #000000 !important; font-weight: 900 !important; }
+.contraste-alto input, .contraste-alto textarea, .contraste-alto select { background-color: #FFFFFF !important; color: #000000 !important; border: 3px solid #000000 !important; }
+.contraste-alto button { background-color: #000000 !important; color: #FFFFFF !important; border: 3px solid #000000 !important; font-weight: 900 !important; }
+.contraste-alto .bg-white { background-color: #FFFFFF !important; color: #000000 !important; }
+.contraste-alto .bg-gray-900 { background-color: #000000 !important; color: white !important; }
+
 .contraste-alto {
     filter: saturate(1.5);
 }

@@ -1,6 +1,10 @@
 <template>
     <div 
-        class="min-h-screen bg-gray-100 flex"
+        class="min-h-screen flex"
+        :data-tema="preferencias?.tema || 'ninos'"
+        :data-modo="modoVisual"
+        :data-tamano="preferencias?.tamano_letra || 'mediano'"
+        :data-contraste="preferencias?.alto_contraste ? 'si' : 'no'"
         :class="[
             `tema-${preferencias?.tema || 'ninos'}`,
             `modo-${modoVisual}`,

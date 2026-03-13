@@ -47,7 +47,7 @@ class UserPreference extends Model
         
         return self::create([
             'id_usuario' => $id_usuario,
-            'tema' => 'claro',
+            'tema' => 'ninos',
             'tamano_letra' => 'mediano',
             'alto_contraste' => false,
         ]);

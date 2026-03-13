@@ -15,12 +15,16 @@ class PreferenceController extends Controller
     public function actualizarTema(Request $request)
     {
         $validated = $request->validate([
-            'tema' => 'required|in:ninos,adultos,alto_contraste',
+            'tema' => 'required|in:ninos,adultos',
         ]);
 
         $preferencia = UserPreference::obtenerPreferencias(Auth::id());
         $preferencia->update(['tema' => $validated['tema']]);
 
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Tema actualizado', 'tema' => $validated['tema']]);
+        }
+        
         return back()->with('success', '✅ Tema actualizado exitosamente');
     }
 

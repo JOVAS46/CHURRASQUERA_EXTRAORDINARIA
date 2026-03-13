@@ -98,6 +98,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
+import axios from 'axios';
 
 const page = usePage();
 const temaActual = computed(() => page.props.preferencias?.tema || 'ninos');
@@ -111,12 +112,27 @@ onMounted(() => {
 });
 
 const cambiarTema = async (tema) => {
-    await router.post('/preferences/tema', { tema }, { 
-        onSuccess: () => {
-            // Recargar la página para obtener las nuevas preferencias
-            window.location.reload();
+    try {
+        // Cambiar inmediatamente en el DOM
+        const rootElement = document.querySelector('[data-tema]');
+        if (rootElement) {
+            rootElement.setAttribute('data-tema', tema);
+            // Cambiar también la clase
+            rootElement.className = rootElement.className.replace(/tema-\w+/g, `tema-${tema}`);
         }
-    });
+        
+        // Guardar en la BD
+        await axios.post('/preferences/tema', { tema });
+        
+        // Recargar después de 800ms para sincronizar todo
+        setTimeout(() => {
+            window.location.reload();
+        }, 800);
+    } catch (error) {
+        console.error('Error al cambiar tema:', error);
+        // Si hay error, recargar de todas formas
+        window.location.reload();
+    }
 };
 
 const cambiarModoVisual = (modo) => {
@@ -129,21 +145,25 @@ const cambiarModoVisual = (modo) => {
 };
 
 const cambiarContraste = async () => {
-    await router.post('/preferences/alto-contraste', { alto_contraste: altoContraste.value }, { 
-        onSuccess: () => {
-            // Recargar la página para obtener las nuevas preferencias
+    try {
+        await axios.post('/preferences/alto-contraste', { alto_contraste: altoContraste.value });
+        setTimeout(() => {
             window.location.reload();
-        }
-    });
+        }, 500);
+    } catch (error) {
+        console.error('Error al cambiar contraste:', error);
+    }
 };
 
 const cambiarTamanoLetra = async (size) => {
-    await router.post('/preferences/tamano-letra', { tamano_letra: size }, { 
-        onSuccess: () => {
-            // Recargar la página para obtener las nuevas preferencias
+    try {
+        await axios.post('/preferences/tamano-letra', { tamano_letra: size });
+        setTimeout(() => {
             window.location.reload();
-        }
-    });
+        }, 500);
+    } catch (error) {
+        console.error('Error al cambiar tamaño de letra:', error);
+    }
 };
 </script>
 
