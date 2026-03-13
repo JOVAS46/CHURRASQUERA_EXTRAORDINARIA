@@ -13,7 +13,7 @@ class PagoController extends Controller
 {
     public function index()
     {
-        $pagos = Pago::with(['venta', 'pedido.mesa', 'pedido.ticket', 'metodoPago'])
+        $pagos = Pago::with(['pedido.mesa', 'pedido.ticket', 'metodoPago'])
             ->orderBy('fecha_pago', 'desc')
             ->paginate(15);
 
@@ -59,9 +59,20 @@ class PagoController extends Controller
                 'nro_transaccion' => 'TXN-' . date('YmdHis'),
             ]);
 
-            // Cambiar el estado del ticket a 'pagado'
+            // Crear o actualizar ticket
             $ticket = Ticket::where('id_pedido', $validated['id_pedido'])->first();
-            if ($ticket) {
+            if (!$ticket) {
+                // Si no existe, crear uno nuevo
+                $pedido = Pedido::find($validated['id_pedido']);
+                $ticket = Ticket::create([
+                    'numero_ticket' => now()->format('YmdHis'),
+                    'fecha_emision' => now(),
+                    'tipo' => 'cliente',
+                    'estado' => 'pagado',
+                    'id_pedido' => $validated['id_pedido'],
+                ]);
+            } else {
+                // Si existe, actualizar estado a pagado
                 $ticket->update(['estado' => 'pagado']);
             }
 
