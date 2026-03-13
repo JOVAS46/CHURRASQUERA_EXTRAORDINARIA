@@ -304,13 +304,14 @@
 
                         <!-- Número de Transacción -->
                         <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-900 mb-2">Nro. Transacción (Opcional)</label>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">🔖 Nro. Transacción (Automático)</label>
                             <input 
                                 v-model="formularioPago.nro_transaccion"
                                 type="text"
-                                placeholder="Ej: TRX123456"
-                                class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
+                                readonly
+                                class="w-full px-4 py-2 border-2 border-orange-300 rounded-lg bg-orange-50 cursor-not-allowed font-mono font-bold text-orange-700"
                             />
+                            <p class="text-xs text-gray-500 mt-1">Generado automáticamente</p>
                         </div>
 
                         <!-- Botones -->
@@ -373,7 +374,9 @@ const abrirModalPago = (ticket) => {
     pedidoSeleccionado.value = ticket;
     formularioPago.id_metodo_pago = 1; // Auto-set Efectivo
     formularioPago.monto = parseFloat(ticket.pedido?.total || 0);
-    formularioPago.nro_transaccion = '';
+    // Generar número de transacción automático: TIC-10000 a 999999
+    const nroRandom = Math.floor(Math.random() * (999999 - 10000 + 1)) + 10000;
+    formularioPago.nro_transaccion = `TIC-${nroRandom}`;
     erroresPago.value = {};
     mostrarModal.value = true;
 };
