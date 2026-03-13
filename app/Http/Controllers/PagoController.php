@@ -13,7 +13,7 @@ class PagoController extends Controller
 {
     public function index()
     {
-        $pagos = Pago::with(['venta.pedido.mesa', 'venta.pedido.ticket', 'metodoPago'])
+        $pagos = Pago::with(['venta.pedido.mesa', 'venta.pedido.ticket', 'venta.pedido.detalles.producto', 'metodoPago'])
             ->orderBy('fecha_pago', 'desc')
             ->paginate(15);
 
