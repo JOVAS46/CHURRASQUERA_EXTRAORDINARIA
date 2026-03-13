@@ -37,11 +37,6 @@ class Pago extends Model
         return $this->belongsTo(MetodoPago::class, 'id_metodo_pago');
     }
 
-    public function pedido()
-    {
-        return $this->belongsTo(Pedido::class, 'id_venta', 'id_pedido');
-    }
-
     public function usuario()
     {
         return $this->venta->usuario();

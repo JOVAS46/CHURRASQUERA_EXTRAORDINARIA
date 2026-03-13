@@ -277,19 +277,9 @@
                     </div>
 
                     <form @submit.prevent="enviarPago">
-                        <!-- Método de Pago -->
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-900 mb-2">Método de Pago *</label>
-                            <select 
-                                v-model="formularioPago.id_metodo_pago"
-                                class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
-                            >
-                                <option value="">Selecciona método</option>
-                                <option v-for="metodo in metodosPago" :key="metodo.id_metodo_pago" :value="metodo.id_metodo_pago">
-                                    {{ metodo.nombre }}
-                                </option>
-                            </select>
-                            <p v-if="erroresPago.id_metodo_pago" class="text-red-600 text-sm mt-1">{{ erroresPago.id_metodo_pago[0] }}</p>
+                        <!-- Info método de pago -->
+                        <div class="mb-4 bg-orange-50 p-3 rounded-lg">
+                            <p class="text-sm font-semibold text-orange-700">💰 Método: Efectivo</p>
                         </div>
 
                         <!-- Monto -->
@@ -375,7 +365,7 @@ const erroresPago = ref({});
 
 const abrirModalPago = (ticket) => {
     pedidoSeleccionado.value = ticket;
-    formularioPago.id_metodo_pago = '';
+    formularioPago.id_metodo_pago = 1; // Auto-set Efectivo
     formularioPago.monto = parseFloat(ticket.pedido?.total || 0);
     formularioPago.nro_transaccion = '';
     erroresPago.value = {};
@@ -412,11 +402,15 @@ const enviarPago = () => {
         nro_transaccion: formularioPago.nro_transaccion,
     }, {
         onSuccess: () => {
+            console.log('✅ Pago registrado exitosamente');
             cerrarModal();
             cargandoPago.value = false;
-            router.reload();
+            setTimeout(() => {
+                router.reload();
+            }, 300);
         },
         onError: (errors) => {
+            console.error('❌ Error al registrar pago:', errors);
             erroresPago.value = errors;
             cargandoPago.value = false;
         }

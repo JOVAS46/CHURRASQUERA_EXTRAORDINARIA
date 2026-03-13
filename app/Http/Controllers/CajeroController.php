@@ -114,8 +114,10 @@ class CajeroController extends Controller
             // Actualizar estado de pedido a entregado
             $pedido->update(['estado' => 'entregado']);
 
-            // Marcar ticket como impreso cuando se paga
-            $ticket->update(['estado' => 'impreso']);
+            // Marcar ticket como pagado cuando se completa el pago
+            \Log::info('Actualizando ticket a pagado', ['id_ticket' => $ticket->id_ticket, 'numero_ticket' => $ticket->numero_ticket]);
+            $ticketUpdate = $ticket->update(['estado' => 'pagado']);
+            \Log::info('Resultado del update de ticket', ['resultado' => $ticketUpdate, 'id_ticket' => $ticket->id_ticket]);
 
             // Liberar mesa
             $pedido->mesa->update(['estado' => 'disponible']);
@@ -457,6 +459,12 @@ class CajeroController extends Controller
                     $pedido = $venta->pedido;
                     if ($pedido) {
                         $pedido->update(['estado' => 'entregado']);
+
+                        // ✅ Marcar Ticket como pagado
+                        $ticket = Ticket::where('id_pedido', $pedido->id_pedido)->first();
+                        if ($ticket) {
+                            $ticket->update(['estado' => 'pagado']);
+                        }
 
                         // ✅ Liberar Mesa
                         if ($pedido->mesa) {

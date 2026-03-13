@@ -37,14 +37,14 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         <div>
-                                            <p class="font-semibold">Ticket #{{ pago.pedido?.ticket?.numero_ticket || 'N/A' }}</p>
-                                            <p class="text-xs text-gray-500">{{ pago.pedido?.ticket?.tipo || 'Sin ticket' }}</p>
+                                            <p class="font-semibold">Ticket #{{ pago.venta?.pedido?.ticket?.numero_ticket || 'N/A' }}</p>
+                                            <p class="text-xs text-gray-500">{{ pago.venta?.pedido?.ticket?.tipo || 'Sin ticket' }}</p>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         <div>
-                                            <p class="font-semibold">Pedido #{{ pago.pedido?.id_pedido }}</p>
-                                            <p class="text-xs text-gray-500">Mesa {{ pago.pedido?.mesa?.numero_mesa }}</p>
+                                            <p class="font-semibold">Pedido #{{ pago.venta?.pedido?.id_pedido }}</p>
+                                            <p class="text-xs text-gray-500">Mesa {{ pago.venta?.pedido?.mesa?.numero_mesa }}</p>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -53,14 +53,14 @@
                                         </p>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                        {{ pago.metodo_pago?.nombre || 'N/A' }}
+                                        {{ pago.metodoPago?.nombre || 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         {{ formatDate(pago.fecha_pago) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span :class="['px-3 py-1 rounded-full text-xs font-semibold', estadoTicketBadge(pago.pedido?.ticket?.estado)]">
-                                            {{ pago.pedido?.ticket?.estado || 'Sin ticket' }}
+                                        <span :class="['px-3 py-1 rounded-full text-xs font-semibold', estadoTicketBadge(pago.venta?.pedido?.ticket?.estado)]">
+                                            {{ pago.venta?.pedido?.ticket?.estado || 'Sin ticket' }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">

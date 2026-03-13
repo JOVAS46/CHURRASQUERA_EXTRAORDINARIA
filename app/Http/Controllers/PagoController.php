@@ -13,7 +13,7 @@ class PagoController extends Controller
 {
     public function index()
     {
-        $pagos = Pago::with(['pedido.mesa', 'pedido.ticket', 'metodoPago'])
+        $pagos = Pago::with(['venta.pedido.mesa', 'venta.pedido.ticket', 'metodoPago'])
             ->orderBy('fecha_pago', 'desc')
             ->paginate(15);
 
@@ -85,7 +85,7 @@ class PagoController extends Controller
 
     public function show(Pago $pago)
     {
-        $pago->load(['venta', 'pedido.mesa', 'pedido.detalles.producto', 'metodoPago']);
+        $pago->load(['venta.pedido.mesa', 'venta.pedido.detalles.producto', 'metodoPago']);
 
         return Inertia::render('Pagos/Show', [
             'pago' => $pago,
@@ -94,7 +94,7 @@ class PagoController extends Controller
 
     public function edit(Pago $pago)
     {
-        $pago->load(['pedido']);
+        $pago->load(['venta.pedido']);
         $metodos_pago = MetodoPago::where('activo', true)->get();
 
         return Inertia::render('Pagos/Edit', [
