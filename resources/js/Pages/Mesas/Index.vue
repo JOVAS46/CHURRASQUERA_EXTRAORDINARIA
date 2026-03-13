@@ -254,6 +254,7 @@
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import Layout from '@/Layouts/Layout.vue';
 import { ref, computed, onMounted, watch } from 'vue';
+import axios from 'axios';
 
 const page = usePage();
 
@@ -308,32 +309,14 @@ const crearReserva = async () => {
     errorGeneral.value = '';
 
     try {
-        const response = await fetch('/reservas', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-            },
-            body: JSON.stringify({
-                id_mesa: mesaSeleccionada.value.id_mesa,
-                fecha_reserva: formularioReserva.value.fecha_reserva,
-                hora_inicio: formularioReserva.value.hora_inicio,
-                hora_fin: formularioReserva.value.hora_fin,
-                numero_personas: formularioReserva.value.numero_personas,
-                observaciones: formularioReserva.value.observaciones,
-            }),
+        await axios.post('/reservas', {
+            id_mesa: mesaSeleccionada.value.id_mesa,
+            fecha_reserva: formularioReserva.value.fecha_reserva,
+            hora_inicio: formularioReserva.value.hora_inicio,
+            hora_fin: formularioReserva.value.hora_fin,
+            numero_personas: formularioReserva.value.numero_personas,
+            observaciones: formularioReserva.value.observaciones,
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            if (data.errors) {
-                erroresReserva.value = data.errors;
-            } else {
-                errorGeneral.value = data.message || 'Error al crear la reserva';
-            }
-            return;
-        }
 
         // Éxito
         mensajeExito.value = true;
@@ -342,7 +325,14 @@ const crearReserva = async () => {
             mensajeExito.value = false;
         }, 5000);
     } catch (error) {
-        errorGeneral.value = 'Error de conexión: ' + error.message;
+        if (error.response?.data?.errors) {
+            erroresReserva.value = error.response.data.errors;
+            errorGeneral.value = 'Por favor revisa los errores en el formulario';
+        } else if (error.response?.data?.message) {
+            errorGeneral.value = error.response.data.message;
+        } else {
+            errorGeneral.value = 'Error al crear la reserva: ' + error.message;
+        }
     } finally {
         cargandoReserva.value = false;
     }
