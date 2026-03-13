@@ -26,7 +26,7 @@ class PedidoController extends Controller
 
     public function create()
     {
-        $mesas = Mesa::where('estado', 'disponible')->get();
+        $mesas = Mesa::all();
         $productos = Producto::with('categoria')->get();
 
         return Inertia::render('Pedidos/Create', [

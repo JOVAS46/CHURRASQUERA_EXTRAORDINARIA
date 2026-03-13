@@ -16,9 +16,9 @@
                                 v-model="formulario.id_mesa"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
                             >
-                                <option value="">Elige una mesa disponible</option>
+                                <option value="">Elige una mesa</option>
                                 <option v-for="mesa in mesas" :key="mesa.id_mesa" :value="mesa.id_mesa">
-                                    Mesa {{ mesa.numero_mesa }} - Capacidad: {{ mesa.capacidad }} personas ({{ mesa.ubicacion }})
+                                    Mesa {{ mesa.numero_mesa }} - Capacidad: {{ mesa.capacidad }} personas ({{ mesa.ubicacion }}) {{ mesa.estado !== 'disponible' ? `[${mesa.estado.toUpperCase()}]` : '' }}
                                 </option>
                             </select>
                             <p v-if="errors.id_mesa" class="text-red-600 text-sm mt-2"><i class="fas fa-exclamation-triangle mr-1 text-yellow-600"></i> {{ errors.id_mesa[0] }}</p>
@@ -26,7 +26,7 @@
 
                         <!-- Grid de Productos -->
                         <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4">🍗 Productos Disponibles</h2>
+                            <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fas fa-drumstick-chicken mr-2"></i> Productos Disponibles</h2>
                             
                             <!-- Buscador de Productos -->
                             <input 
@@ -61,7 +61,7 @@
                     <!-- Panel Derecho - Carrito -->
                     <div class="lg:col-span-1">
                         <div class="bg-white rounded-lg shadow-sm p-6 sticky top-6">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4">🛒 Carrito</h2>
+                            <h2 class="text-xl font-bold text-gray-900 mb-4"><i class="fas fa-shopping-cart mr-2"></i> Carrito</h2>
 
                             <!-- Items del Carrito -->
                             <div v-if="formulario.detalles.length > 0" class="space-y-3 max-h-96 overflow-y-auto mb-4">
@@ -103,7 +103,7 @@
                             </div>
 
                             <div v-else class="bg-gray-50 p-6 rounded-lg text-center text-gray-500 mb-4">
-                                <p class="text-sm">👇 Selecciona productos para agregar</p>
+                                <p class="text-sm"><i class="fas fa-arrow-down mr-2"></i> Selecciona productos para agregar</p>
                             </div>
 
                             <!-- Resumen -->
