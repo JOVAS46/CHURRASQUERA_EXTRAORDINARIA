@@ -98,8 +98,8 @@ Route::middleware(['auth'])->group(function () {
     // Usuarios
     Route::resource('usuarios', UserController::class);
     
-    // Pagos
-    Route::resource('pagos', PagoController::class);
+    // Pagos (solo visualización y edición, creación desde Cuentas por Cobrar)
+    Route::resource('pagos', PagoController::class)->except(['create', 'store']);
     
     // Tickets
     Route::resource('tickets', TicketController::class);

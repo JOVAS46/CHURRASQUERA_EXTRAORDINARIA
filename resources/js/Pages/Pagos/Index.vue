@@ -4,11 +4,9 @@
         
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <div class="flex justify-between items-center mb-6">
+                <div class="mb-6">
                     <h1 class="text-3xl font-bold text-gray-900">Gestión de Pagos</h1>
-                    <Link href="/pagos/create" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700">
-                        + Nuevo Pago
-                    </Link>
+                    <p class="text-gray-600 text-sm mt-2">Los pagos se registran desde <strong>Cuentas por Cobrar</strong> en el módulo del Cajero</p>
                 </div>
 
                 <!-- Mensaje de éxito -->
