@@ -109,44 +109,77 @@ const modoVisualActual = ref('claro');
 onMounted(() => {
     altoContraste.value = page.props.preferencias?.alto_contraste || false;
     modoVisualActual.value = localStorage.getItem('modoVisual') || 'claro';
+    
+    // Aplicar preferencias guardadas en localStorage
+    const rootElement = document.querySelector('[data-tema]');
+    if (rootElement) {
+        const temaLocal = localStorage.getItem('temaLocal');
+        const tamanoLocal = localStorage.getItem('tamanoLocal');
+        const contrasteLocal = localStorage.getItem('contrasteLocal');
+        const modoLocal = localStorage.getItem('modoVisual') || 'claro';
+        
+        // Aplicar tema
+        if (temaLocal) {
+            rootElement.setAttribute('data-tema', temaLocal);
+            rootElement.className = rootElement.className.replace(/tema-\w+/g, `tema-${temaLocal}`);
+        }
+        
+        // Aplicar modo visual
+        rootElement.setAttribute('data-modo', modoLocal);
+        rootElement.className = rootElement.className.replace(/modo-\w+/g, `modo-${modoLocal}`);
+        
+        // Aplicar tamaño
+        if (tamanoLocal) {
+            rootElement.setAttribute('data-tamano', tamanoLocal);
+            rootElement.className = rootElement.className.replace(/tamaño-\w+/g, `tamaño-${tamanoLocal}`);
+        }
+        
+        // Aplicar contraste
+        if (contrasteLocal === 'true') {
+            rootElement.setAttribute('data-contraste', 'si');
+            rootElement.classList.add('contraste-alto');
+            altoContraste.value = true;
+        }
+        
+        // Emitir evento para sincronizar con Layout
+        window.dispatchEvent(new CustomEvent('modoVisualChanged', { detail: { modo: modoLocal } }));
+    }
 });
 
 const cambiarTema = async (tema) => {
     try {
-        // Cambiar inmediatamente en el DOM
+        // Cambiar inmediatamente en el DOM - SIN RECARGAR
         const rootElement = document.querySelector('[data-tema]');
         if (rootElement) {
             rootElement.setAttribute('data-tema', tema);
-            // Cambiar también la clase
             rootElement.className = rootElement.className.replace(/tema-\w+/g, `tema-${tema}`);
         }
         
-        // Guardar en la BD
-        await axios.post('/preferences/tema', { tema });
-        
-        // Recargar después de 800ms para sincronizar todo
-        setTimeout(() => {
-            window.location.reload();
-        }, 800);
+        // Guardar en localStorage para persistencia local
+        localStorage.setItem('temaLocal', tema);
     } catch (error) {
         console.error('Error al cambiar tema:', error);
-        // Si hay error, recargar de todas formas
-        window.location.reload();
     }
 };
 
 const cambiarModoVisual = (modo) => {
     modoVisualActual.value = modo;
     localStorage.setItem('modoVisual', modo);
-    // Actualizar el atributo data-modo en el HTML
-    document.documentElement.setAttribute('data-modo', modo);
-    // Emitir evento para que Layout se entere
+    
+    // Actualizar el atributo data-modo en el elemento principal
+    const rootElement = document.querySelector('[data-modo]');
+    if (rootElement) {
+        rootElement.setAttribute('data-modo', modo);
+        rootElement.className = rootElement.className.replace(/modo-\w+/g, `modo-${modo}`);
+    }
+    
+    // Emitir evento para que Layout se actualice
     window.dispatchEvent(new CustomEvent('modoVisualChanged', { detail: { modo } }));
 };
 
 const cambiarContraste = async () => {
     try {
-        // Actualizar inmediatamente en el DOM
+        // Cambiar inmediatamente en el DOM - SIN RECARGAR
         const rootElement = document.querySelector('[data-contraste]');
         if (rootElement) {
             if (altoContraste.value) {
@@ -158,40 +191,27 @@ const cambiarContraste = async () => {
             }
         }
         
-        // Guardar en la BD
-        await axios.post('/preferences/alto-contraste', { alto_contraste: altoContraste.value });
-        
-        // Recargar después de 500ms para sincronizar
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
+        // Guardar en localStorage para persistencia local
+        localStorage.setItem('contrasteLocal', altoContraste.value);
     } catch (error) {
         console.error('Error al cambiar contraste:', error);
-        window.location.reload();
     }
 };
 
 const cambiarTamanoLetra = async (size) => {
     try {
-        // Actualizar inmediatamente en el DOM
+        // Actualizar inmediatamente en el DOM - SIN RECARGAR
         const rootElement = document.querySelector('[data-tamano]');
         if (rootElement) {
             rootElement.setAttribute('data-tamano', size);
-            // Cambiar clase tamaño
             const currentClasses = rootElement.className;
             rootElement.className = currentClasses.replace(/tamaño-\w+/g, `tamaño-${size}`);
         }
         
-        // Guardar en la BD
-        await axios.post('/preferences/tamano-letra', { tamano_letra: size });
-        
-        // Recargar después de 500ms para sincronizar
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
+        // Guardar en localStorage para persistencia local
+        localStorage.setItem('tamanoLocal', size);
     } catch (error) {
         console.error('Error al cambiar tamaño de letra:', error);
-        window.location.reload();
     }
 };
 </script>

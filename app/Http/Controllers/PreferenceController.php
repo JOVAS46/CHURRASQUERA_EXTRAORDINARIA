@@ -41,6 +41,10 @@ class PreferenceController extends Controller
         $preferencia = UserPreference::obtenerPreferencias(Auth::id());
         $preferencia->update(['tamano_letra' => $validated['tamano_letra']]);
 
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Tamaño actualizado', 'tamano_letra' => $validated['tamano_letra']]);
+        }
+
         return back()->with('success', '✅ Tamaño de letra actualizado');
     }
 
@@ -56,6 +60,10 @@ class PreferenceController extends Controller
 
         $preferencia = UserPreference::obtenerPreferencias(Auth::id());
         $preferencia->update(['alto_contraste' => $validated['alto_contraste']]);
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Contraste actualizado', 'alto_contraste' => $validated['alto_contraste']]);
+        }
 
         return back()->with('success', '✅ Contraste actualizado');
     }
