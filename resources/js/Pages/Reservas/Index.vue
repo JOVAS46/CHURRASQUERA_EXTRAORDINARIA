@@ -92,7 +92,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Personas</th>
                                     <th v-if="esGerente" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
-                                    <th v-if="esGerente" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -107,7 +107,7 @@
                                         {{ formatTime(reserva.hora_inicio) }} - {{ formatTime(reserva.hora_fin) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                        👥 {{ reserva.numero_personas }}
+                                        <i class="fas fa-users mr-2"></i> {{ reserva.numero_personas }}
                                     </td>
                                     <td v-if="esGerente" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         {{ nombreCliente(reserva.usuario) }}
@@ -117,8 +117,15 @@
                                             {{ reserva.estado }}
                                         </span>
                                     </td>
-                                    <td v-if="esGerente" class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                         <button 
+                                            @click="imprimirReserva(reserva)"
+                                            class="text-blue-600 hover:text-blue-900 tooltip"
+                                            title="Imprimir reserva"
+                                        >
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button v-if="esGerente"
                                             @click="verDetalles(reserva)"
                                             class="text-orange-600 hover:text-orange-900"
                                         >
@@ -263,6 +270,107 @@ const limpiarFiltros = () => {
     filtroFecha.value = '';
     filtroHora.value = '';
     filtroEstado.value = '';
+};
+
+const imprimirReserva = (reserva) => {
+    const ventanaImpresion = window.open('', '', 'width=800,height=600');
+    const fecha = new Date(reserva.fecha_reserva).toLocaleDateString('es-BO', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    const horaInicio = formatTime(reserva.hora_inicio);
+    const horaFin = formatTime(reserva.hora_fin);
+    
+    const contenidoHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Comprobante de Reserva</title>
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+                .contenedor { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                .header { text-align: center; margin-bottom: 40px; border-bottom: 3px solid #ea580c; padding-bottom: 20px; }
+                .logo { font-size: 28px; font-weight: bold; color: #ea580c; margin-bottom: 10px; }
+                .subtitulo { font-size: 14px; color: #666; }
+                .titulo { font-size: 24px; font-weight: bold; color: #333; margin: 30px 0 20px 0; text-align: center; }
+                .seccion { margin-bottom: 30px; }
+                .fila { display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+                .fila:last-child { border-bottom: none; }
+                .etiqueta { font-weight: bold; color: #666; font-size: 14px; }
+                .valor { color: #333; font-size: 16px; font-weight: 500; }
+                .mesa-grande { font-size: 32px; color: #ea580c; text-align: center; font-weight: bold; }
+                .pie { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ea580c; color: #666; font-size: 12px; }
+                @media print { body { background: white; } .contenedor { box-shadow: none; } }
+            </style>
+        </head>
+        <body>
+            <div class="contenedor">
+                <div class="header">
+                    <div class="logo">🍗 CHURRASQUERA</div>
+                    <div class="subtitulo">Comprobante de Reserva</div>
+                </div>
+                
+                <div class="titulo">Detalles de tu Reserva</div>
+                
+                <div class="seccion">
+                    <div class="fila">
+                        <span class="etiqueta">Mesa Reservada:</span>
+                        <span class="valor">Mesa #${reserva.mesa?.numero_mesa || 'N/A'}</span>
+                    </div>
+                    
+                    <div class="fila">
+                        <span class="etiqueta">Fecha:</span>
+                        <span class="valor">${fecha}</span>
+                    </div>
+                    
+                    <div class="fila">
+                        <span class="etiqueta">Hora de Inicio:</span>
+                        <span class="valor">${horaInicio}</span>
+                    </div>
+                    
+                    <div class="fila">
+                        <span class="etiqueta">Hora de Fin:</span>
+                        <span class="valor">${horaFin}</span>
+                    </div>
+                    
+                    <div class="fila">
+                        <span class="etiqueta">Cantidad de Personas:</span>
+                        <span class="valor">${reserva.numero_personas}</span>
+                    </div>
+                    
+                    <div class="fila">
+                        <span class="etiqueta">Estado:</span>
+                        <span class="valor" style="color: ${reserva.estado === 'confirmada' ? '#16a34a' : reserva.estado === 'completada' ? '#2563eb' : '#dc2626'}">
+                            ${reserva.estado.toUpperCase()}
+                        </span>
+                    </div>
+                </div>
+                
+                ${reserva.observaciones ? `
+                <div class="seccion">
+                    <div class="etiqueta">Observaciones:</div>
+                    <div class="valor" style="margin-top: 10px;">${reserva.observaciones}</div>
+                </div>
+                ` : ''}
+                
+                <div class="pie">
+                    <p>Gracias por tu confianza 🙏</p>
+                    <p>Por favor, presenta este comprobante en el restaurante</p>
+                    <p style="margin-top: 10px; font-size: 11px;">Generado: ${new Date().toLocaleString('es-BO')}</p>
+                </div>
+            </div>
+            <script>
+                window.print();
+            <\/script>
+        </body>
+        </html>
+    `;
+    ventanaImpresion.document.write(contenidoHTML);
+    ventanaImpresion.document.close();
 };
 
 const verDetalles = (reserva) => {
