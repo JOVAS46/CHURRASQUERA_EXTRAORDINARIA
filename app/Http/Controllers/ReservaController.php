@@ -78,13 +78,19 @@ class ReservaController extends Controller
                 ->exists();
 
             if ($reservaExistente) {
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'message' => 'La mesa no está disponible en ese horario',
+                        'errors' => ['id_mesa' => 'La mesa no está disponible en ese horario']
+                    ], 422);
+                }
                 return back()->withErrors(['id_mesa' => 'La mesa no está disponible en ese horario']);
             }
 
             // Para clientes autenticados, usar su id
             $idCliente = Auth::check() ? Auth::id() : null;
 
-            Reserva::create([
+            $reserva = Reserva::create([
                 'id_mesa' => $validated['id_mesa'],
                 'fecha_reserva' => $validated['fecha_reserva'],
                 'hora_inicio' => $validated['hora_inicio'],
@@ -95,9 +101,21 @@ class ReservaController extends Controller
                 'id_cliente' => $idCliente,
             ]);
 
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Reserva creada exitosamente',
+                    'reserva' => $reserva
+                ], 201);
+            }
+
             return redirect('/mesas')
                 ->with('success', '✅ Reserva creada exitosamente');
         } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Error al crear la reserva: ' . $e->getMessage()
+                ], 500);
+            }
             return back()->with('error', 'Error al crear la reserva: ' . $e->getMessage());
         }
     }

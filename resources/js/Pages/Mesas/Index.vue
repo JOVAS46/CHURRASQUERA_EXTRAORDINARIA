@@ -316,6 +316,11 @@ const crearReserva = async () => {
             hora_fin: formularioReserva.value.hora_fin,
             numero_personas: formularioReserva.value.numero_personas,
             observaciones: formularioReserva.value.observaciones,
+        }, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
         });
 
         // Éxito
