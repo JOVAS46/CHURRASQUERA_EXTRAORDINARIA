@@ -92,7 +92,7 @@
                         </div>
 
                         <div class="flex gap-2">
-                            <button v-if="mesa.estado !== 'mantenimiento'" @click="irAReservar(mesa.id_mesa)"
+                            <button v-if="mesa.estado !== 'mantenimiento'" @click="abrirModalReserva(mesa)"
                                 class="flex-1 text-center text-sm font-medium px-3 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition"
                             >
                                 📅 Reservar
@@ -141,6 +141,112 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Reserva -->
+        <div v-if="modalReservaAbierto" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="sticky top-0 bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4 text-white flex justify-between items-center">
+                    <h2 class="text-xl font-bold">📅 Crear Reserva - Mesa {{ mesaSeleccionada?.numero_mesa }}</h2>
+                    <button @click="cerrarModal" class="text-white hover:bg-orange-700 p-2 rounded">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <form @submit.prevent="crearReserva" class="p-6 space-y-4">
+                    <!-- Mesa Info -->
+                    <div class="bg-orange-50 border-2 border-orange-200 rounded p-4">
+                        <p class="text-sm text-orange-700">Mesa Preseleccionada</p>
+                        <p class="text-2xl font-bold text-orange-900">Mesa {{ mesaSeleccionada?.numero_mesa }} - {{ mesaSeleccionada?.capacidad }} personas</p>
+                        <p class="text-sm text-orange-700 mt-1"><i class="fas fa-map-pin mr-1"></i> {{ mesaSeleccionada?.ubicacion }}</p>
+                    </div>
+
+                    <!-- Fecha -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2">Fecha de Reserva *</label>
+                        <input 
+                            v-model="formularioReserva.fecha_reserva" 
+                            type="date"
+                            :min="hoyFormato"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
+                            required
+                        />
+                        <p v-if="erroresReserva.fecha_reserva" class="text-red-600 text-sm mt-1">{{ erroresReserva.fecha_reserva[0] }}</p>
+                    </div>
+
+                    <!-- Horarios -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Hora Inicio *</label>
+                            <input 
+                                v-model="formularioReserva.hora_inicio" 
+                                type="time"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
+                                required
+                            />
+                            <p v-if="erroresReserva.hora_inicio" class="text-red-600 text-sm mt-1">{{ erroresReserva.hora_inicio[0] }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Hora Fin *</label>
+                            <input 
+                                v-model="formularioReserva.hora_fin" 
+                                type="time"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
+                                required
+                            />
+                            <p v-if="erroresReserva.hora_fin" class="text-red-600 text-sm mt-1">{{ erroresReserva.hora_fin[0] }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Personas -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2">Número de Personas *</label>
+                        <input 
+                            v-model.number="formularioReserva.numero_personas" 
+                            type="number"
+                            min="1"
+                            :max="mesaSeleccionada?.capacidad"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
+                            required
+                        />
+                        <p v-if="erroresReserva.numero_personas" class="text-red-600 text-sm mt-1">{{ erroresReserva.numero_personas[0] }}</p>
+                    </div>
+
+                    <!-- Observaciones -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2">Observaciones</label>
+                        <textarea 
+                            v-model="formularioReserva.observaciones"
+                            rows="3"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
+                        ></textarea>
+                    </div>
+
+                    <!-- Errores generales -->
+                    <div v-if="errorGeneral" class="bg-red-50 border border-red-200 rounded p-4">
+                        <p class="text-red-700"><i class="fas fa-exclamation-circle mr-2"></i> {{ errorGeneral }}</p>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" @click="cerrarModal" 
+                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium"
+                        >
+                            Cancelar
+                        </button>
+                        <button type="submit" :disabled="cargandoReserva"
+                            class="flex-1 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-medium disabled:opacity-50"
+                        >
+                            <span v-if="!cargandoReserva">
+                                <i class="fas fa-check mr-2"></i> Confirmar Reserva
+                            </span>
+                            <span v-else>
+                                <i class="fas fa-spinner fa-spin mr-2"></i> Procesando...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </Layout>
 </template>
 
@@ -160,6 +266,87 @@ const props = defineProps({
 
 const filtroEstado = ref('');
 const mensajeExito = ref(false);
+const modalReservaAbierto = ref(false);
+const mesaSeleccionada = ref(null);
+const cargandoReserva = ref(false);
+const errorGeneral = ref('');
+
+const hoyFormato = new Date().toISOString().split('T')[0];
+
+const formularioReserva = ref({
+    fecha_reserva: '',
+    hora_inicio: '',
+    hora_fin: '',
+    numero_personas: 1,
+    observaciones: '',
+});
+
+const erroresReserva = ref({});
+
+const abrirModalReserva = (mesa) => {
+    mesaSeleccionada.value = mesa;
+    formularioReserva.value = {
+        fecha_reserva: '',
+        hora_inicio: '',
+        hora_fin: '',
+        numero_personas: 1,
+        observaciones: '',
+    };
+    erroresReserva.value = {};
+    errorGeneral.value = '';
+    modalReservaAbierto.value = true;
+};
+
+const cerrarModal = () => {
+    modalReservaAbierto.value = false;
+    mesaSeleccionada.value = null;
+};
+
+const crearReserva = async () => {
+    cargandoReserva.value = true;
+    erroresReserva.value = {};
+    errorGeneral.value = '';
+
+    try {
+        const response = await fetch('/reservas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+            },
+            body: JSON.stringify({
+                id_mesa: mesaSeleccionada.value.id_mesa,
+                fecha_reserva: formularioReserva.value.fecha_reserva,
+                hora_inicio: formularioReserva.value.hora_inicio,
+                hora_fin: formularioReserva.value.hora_fin,
+                numero_personas: formularioReserva.value.numero_personas,
+                observaciones: formularioReserva.value.observaciones,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            if (data.errors) {
+                erroresReserva.value = data.errors;
+            } else {
+                errorGeneral.value = data.message || 'Error al crear la reserva';
+            }
+            return;
+        }
+
+        // Éxito
+        mensajeExito.value = true;
+        cerrarModal();
+        setTimeout(() => {
+            mensajeExito.value = false;
+        }, 5000);
+    } catch (error) {
+        errorGeneral.value = 'Error de conexión: ' + error.message;
+    } finally {
+        cargandoReserva.value = false;
+    }
+};
 
 const mesasFiltradas = computed(() => {
     if (!filtroEstado.value) return props.mesas.data;
@@ -186,10 +373,6 @@ const deleteMesa = (mesa) => {
     if (confirm(`¿Estás seguro de que deseas eliminar la Mesa ${mesa.numero_mesa}?`)) {
         router.delete(`/mesas/${mesa.id_mesa}`);
     }
-};
-
-const irAReservar = (mesaId) => {
-    router.get(`/reservas/create?mesa=${mesaId}`);
 };
 
 // Monitorear mensajes flash
