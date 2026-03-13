@@ -146,23 +146,52 @@ const cambiarModoVisual = (modo) => {
 
 const cambiarContraste = async () => {
     try {
+        // Actualizar inmediatamente en el DOM
+        const rootElement = document.querySelector('[data-contraste]');
+        if (rootElement) {
+            if (altoContraste.value) {
+                rootElement.setAttribute('data-contraste', 'si');
+                rootElement.classList.add('contraste-alto');
+            } else {
+                rootElement.setAttribute('data-contraste', 'no');
+                rootElement.classList.remove('contraste-alto');
+            }
+        }
+        
+        // Guardar en la BD
         await axios.post('/preferences/alto-contraste', { alto_contraste: altoContraste.value });
+        
+        // Recargar después de 500ms para sincronizar
         setTimeout(() => {
             window.location.reload();
         }, 500);
     } catch (error) {
         console.error('Error al cambiar contraste:', error);
+        window.location.reload();
     }
 };
 
 const cambiarTamanoLetra = async (size) => {
     try {
+        // Actualizar inmediatamente en el DOM
+        const rootElement = document.querySelector('[data-tamano]');
+        if (rootElement) {
+            rootElement.setAttribute('data-tamano', size);
+            // Cambiar clase tamaño
+            const currentClasses = rootElement.className;
+            rootElement.className = currentClasses.replace(/tamaño-\w+/g, `tamaño-${size}`);
+        }
+        
+        // Guardar en la BD
         await axios.post('/preferences/tamano-letra', { tamano_letra: size });
+        
+        // Recargar después de 500ms para sincronizar
         setTimeout(() => {
             window.location.reload();
         }, 500);
     } catch (error) {
         console.error('Error al cambiar tamaño de letra:', error);
+        window.location.reload();
     }
 };
 </script>
