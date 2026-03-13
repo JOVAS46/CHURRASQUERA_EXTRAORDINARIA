@@ -11,7 +11,7 @@
 
                 <!-- Mensaje de éxito -->
                 <div v-if="$page.props.flash?.success" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    ✅ {{ $page.props.flash.success }}
+                    <i class="fas fa-check-circle mr-2"></i> {{ $page.props.flash.success }}
                 </div>
 
                 <!-- Tabla de Pagos -->
@@ -308,13 +308,13 @@ const imprimirPago = (pago) => {
         <body>
             <div class="pago-container">
                 <div class="encabezado">
-                    <h1>💳 COMPROBANTE DE PAGO</h1>
+                    <h1>COMPROBANTE DE PAGO</h1>
                     <p>#${pago.id_pago}</p>
                     <p class="fecha">${fechaFormato}</p>
                 </div>
                 
                 <div class="seccion">
-                    <div class="seccion-titulo">📋 Información del Ticket</div>
+                    <div class="seccion-titulo">Información del Ticket</div>
                     <div class="fila">
                         <span class="etiqueta">Ticket:</span>
                         <span class="valor">#${pago.venta?.pedido?.ticket?.numero_ticket || 'N/A'}</span>
@@ -326,7 +326,7 @@ const imprimirPago = (pago) => {
                 </div>
                 
                 <div class="seccion">
-                    <div class="seccion-titulo">🏠 Información de Pedido</div>
+                    <div class="seccion-titulo">Información de Pedido</div>
                     <div class="fila">
                         <span class="etiqueta">Pedido:</span>
                         <span class="valor">#${pago.venta?.pedido?.id_pedido || 'N/A'}</span>
@@ -357,7 +357,7 @@ const imprimirPago = (pago) => {
                 })()}
                 
                 <div class="seccion">
-                    <div class="seccion-titulo">💰 Información del Pago</div>
+                    <div class="seccion-titulo">Información del Pago</div>
                     <div class="fila">
                         <span class="etiqueta">Método:</span>
                         <span class="valor">${pago.metodo_pago?.nombre || 'N/A'}</span>
@@ -369,7 +369,7 @@ const imprimirPago = (pago) => {
                 </div>
                 
                 <div class="estado-badge">
-                    ✅ PAGADO
+                    PAGADO
                 </div>
                 
                 <div class="total">
@@ -377,7 +377,7 @@ const imprimirPago = (pago) => {
                 </div>
                 
                 <div class="pie">
-                    <p>Gracias por su compra 🙏</p>
+                    <p>Gracias por su compra</p>
                     <p style="margin-top: 5px;">Comprobante de pago</p>
                 </div>
             </div>

@@ -12,10 +12,10 @@
 
                 <!-- Mensaje de éxito/error -->
                 <div v-if="$page.props.flash?.success" class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg animate-bounce">
-                    ✅ {{ $page.props.flash.success }}
+                    <i class="fas fa-check-circle mr-2"></i> {{ $page.props.flash.success }}
                 </div>
                 <div v-if="$page.props.flash?.error" class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                    ❌ {{ $page.props.flash.error }}
+                    <i class="fas fa-times-circle mr-2"></i> {{ $page.props.flash.error }}
                 </div>
 
                 <!-- Stats -->
@@ -53,7 +53,7 @@
                                         {{ ticket.pedido?.usuario?.nombre || 'Sin asignar' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-600">
-                                        🕐 {{ formatTime(ticket.fecha_emision) }}
+                                        <i class="fas fa-clock text-orange-600 mr-2"></i> {{ formatTime(ticket.fecha_emision) }}
                                     </td>
                                     <td class="px-6 py-4 text-right font-bold text-orange-600">
                                         Bs. {{ parseFloat(ticket.pedido?.total || 0).toFixed(2) }}
@@ -75,19 +75,19 @@
                                                 @click="imprimirTicket(ticket)"
                                                 class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
-                                                🖨️ Imprimir
+                                                <i class="fas fa-print mr-1"></i> Imprimir
                                             </button>
                                             <button 
                                                 @click="abrirModalPago(ticket)"
                                                 class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
-                                                💰 Efectivo
+                                                <i class="fas fa-money-bill mr-1"></i> Efectivo
                                             </button>
                                             <button 
                                                 @click="generarQR(ticket)"
                                                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
-                                                📱 QR
+                                                <i class="fas fa-qrcode mr-1"></i> QR
                                             </button>
                                             <button 
                                                 v-if="obtenerEstadoPago(ticket)?.nro_transaccion"
@@ -95,7 +95,7 @@
                                                 :disabled="pagoEnVerificacion[ticket.id_ticket]"
                                                 class="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
-                                                {{ pagoEnVerificacion[ticket.id_ticket] ? '✓ Verificando...' : '✓ Revisar' }}
+                                                <i class="fas fa-check mr-1"></i> {{ pagoEnVerificacion[ticket.id_ticket] ? 'Verificando...' : 'Revisar' }}
                                             </button>
                                         </div>
                                     </td>
@@ -107,7 +107,7 @@
 
                 <!-- Sin tickets -->
                 <div v-else class="bg-white rounded-lg shadow-lg p-12 text-center">
-                    <p class="text-gray-500 text-lg mb-4">✓ No hay tickets pendientes de cobro</p>
+                    <p class="text-gray-500 text-lg mb-4"><i class="fas fa-check-circle mr-2"></i> No hay tickets pendientes de cobro</p>
                     <p class="text-gray-400">Todos los tickets han sido pagados</p>
                 </div>
 
@@ -143,7 +143,7 @@
             <!-- Modal de Pago QR -->
             <div v-if="mostrarModalQR" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div class="bg-white rounded-lg shadow-2xl max-w-md w-full p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">📱 Código QR</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6"><i class="fas fa-qrcode mr-2"></i> Código QR</h2>
 
                     <div v-if="pedidoSeleccionado" class="mb-6 bg-gray-50 p-4 rounded-lg">
                         <p class="text-sm text-gray-600 mb-2">
@@ -179,8 +179,8 @@
                         <div class="bg-gray-100 rounded-lg p-4 mb-6">
                             <p class="text-xs text-gray-600 mb-3">
                                 <span class="font-semibold">Estado:</span>
-                                <span v-if="pollingPausado" class="ml-2 text-yellow-600 font-semibold">⏸ PAUSADO</span>
-                                <span v-else class="ml-2 text-blue-600 font-semibold">▶ VERIFICANDO</span>
+                                <span v-if="pollingPausado" class="ml-2 text-yellow-600 font-semibold"><i class="fas fa-pause"></i> PAUSADO</span>
+                                <span v-else class="ml-2 text-blue-600 font-semibold"><i class="fas fa-play"></i> VERIFICANDO</span>
                             </p>
                             <p class="text-xs text-gray-600">
                                 <span class="font-semibold">Verificaciones:</span> {{ nroVerificaciones }}
@@ -190,7 +190,7 @@
 
                     <!-- Estado: Pago Completado -->
                     <div v-else-if="estadoPagoActual === 'pagado'" class="flex flex-col items-center py-8">
-                        <div class="text-6xl mb-4 animate-bounce">✅</div>
+                        <div class="text-6xl mb-4 animate-bounce"><i class="fas fa-check-circle text-green-500"></i></div>
                         <p class="text-2xl font-bold text-green-600 mb-2">¡Pago Confirmado!</p>
                         <p class="text-gray-600 text-center mb-4">PagoFácil ha confirmado la transacción</p>
                         <p class="text-sm text-gray-500">Cerrando en breve...</p>
@@ -198,7 +198,7 @@
 
                     <!-- Estado: Error -->
                     <div v-else-if="estadoPagoActual === 'error'" class="flex flex-col items-center py-8">
-                        <div class="text-6xl mb-4">❌</div>
+                        <div class="text-6xl mb-4"><i class="fas fa-times-circle text-red-500"></i></div>
                         <p class="text-xl font-bold text-red-600 mb-2">Error en la Verificación</p>
                         <p class="text-gray-600 text-center mb-4">No se pudo verificar el estado del pago</p>
                     </div>
@@ -213,7 +213,7 @@
                                 type="button"
                                 class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded transition disabled:opacity-50"
                             >
-                                🔍 {{ verificandoPago ? 'Verificando...' : 'Verificar Ahora' }}
+                                <i class="fas fa-search mr-1"></i> {{ verificandoPago ? 'Verificando...' : 'Verificar Ahora' }}
                             </button>
                             <button 
                                 v-if="!pollingPausado"
@@ -221,7 +221,7 @@
                                 type="button"
                                 class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-3 rounded transition"
                             >
-                                ⏸ Pausar
+                                <i class="fas fa-pause mr-1"></i> Pausar
                             </button>
                             <button 
                                 v-else
@@ -229,7 +229,7 @@
                                 type="button"
                                 class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded transition"
                             >
-                                ▶ Reanudar
+                                <i class="fas fa-play mr-1"></i> Reanudar
                             </button>
                         </div>
 
@@ -241,7 +241,7 @@
                                 :disabled="!qrGenerado"
                                 class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded transition disabled:opacity-50"
                             >
-                                ⬇️ Descargar
+                                <i class="fas fa-download mr-1"></i> Descargar
                             </button>
                             <button 
                                 @click="cerrarModalQR"
@@ -268,7 +268,7 @@
             <!-- Modal de Pago Efectivo -->
             <div v-if="mostrarModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div class="bg-white rounded-lg shadow-2xl max-w-md w-full p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">💳 Registrar Pago</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6"><i class="fas fa-credit-card mr-2 text-orange-600"></i> Registrar Pago</h2>
 
                     <div v-if="pedidoSeleccionado" class="mb-6 bg-gray-50 p-4 rounded-lg">
                         <p class="text-sm text-gray-600 mb-2">
@@ -285,7 +285,7 @@
                     <form @submit.prevent="enviarPago">
                         <!-- Info método de pago -->
                         <div class="mb-4 bg-orange-50 p-3 rounded-lg">
-                            <p class="text-sm font-semibold text-orange-700">💰 Método: Efectivo</p>
+                            <p class="text-sm font-semibold text-orange-700"><i class="fas fa-money-bill mr-2"></i> Método: Efectivo</p>
                         </div>
 
                         <!-- Monto -->
@@ -304,7 +304,7 @@
 
                         <!-- Número de Transacción -->
                         <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-900 mb-2">🔖 Nro. Transacción (Automático)</label>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2"><i class="fas fa-tag mr-1 text-orange-600"></i> Nro. Transacción (Automático)</label>
                             <input 
                                 v-model="formularioPago.nro_transaccion"
                                 type="text"
@@ -328,7 +328,7 @@
                                 :disabled="cargandoPago"
                                 class="flex-1 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded transition disabled:opacity-50"
                             >
-                                {{ cargandoPago ? 'Procesando...' : '✅ Aceptar Pago' }}
+                                <i class="fas fa-check mr-1"></i> {{ cargandoPago ? 'Procesando...' : 'Aceptar Pago' }}
                             </button>
                         </div>
                     </form>
