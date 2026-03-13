@@ -649,14 +649,19 @@ const imprimirTicket = (ticket) => {
     // Construir lista de productos
     let productosHTML = '';
     if (ticket.pedido.detalles && ticket.pedido.detalles.length > 0) {
-        productosHTML = ticket.pedido.detalles.map(detalle => `
+        productosHTML = ticket.pedido.detalles.map(detalle => {
+            const precioUnitario = parseFloat(detalle.precio_unitario || 0);
+            const cantidad = parseInt(detalle.cantidad || 1);
+            const subtotal = precioUnitario * cantidad;
+            return `
             <tr border="1">
                 <td style="padding: 8px; border: 1px solid #ddd;">${detalle.producto?.nombre || 'Producto'}</td>
-                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${detalle.cantidad || 1}</td>
-                <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">Bs. ${(detalle.precio_unitario || 0).toFixed(2)}</td>
-                <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">Bs. ${((detalle.cantidad || 1) * (detalle.precio_unitario || 0)).toFixed(2)}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${cantidad}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">Bs. ${precioUnitario.toFixed(2)}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">Bs. ${subtotal.toFixed(2)}</td>
             </tr>
-        `).join('');
+        `;
+        }).join('');
     } else {
         productosHTML = '<tr><td colspan="4" style="padding: 8px; border: 1px solid #ddd; text-align: center;">Sin productos</td></tr>';
     }
