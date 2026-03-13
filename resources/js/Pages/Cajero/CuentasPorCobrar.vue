@@ -72,6 +72,12 @@
                                     <td class="px-6 py-4 text-center">
                                         <div class="flex gap-2 flex-wrap justify-center">
                                             <button 
+                                                @click="imprimirTicket(ticket)"
+                                                class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-3 rounded text-sm transition"
+                                            >
+                                                🖨️ Imprimir
+                                            </button>
+                                            <button 
                                                 @click="abrirModalPago(ticket)"
                                                 class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-3 rounded text-sm transition"
                                             >
@@ -628,6 +634,278 @@ const formatTime = (date) => {
         minute: '2-digit',
         second: '2-digit'
     });
+};
+
+const imprimirTicket = (ticket) => {
+    if (!ticket.pedido) {
+        alert('No hay información del pedido');
+        return;
+    }
+
+    const estadoPago = obtenerEstadoPago(ticket);
+    const estado = ticket.estado || 'pendiente';
+    const estadoTexto = estado.charAt(0).toUpperCase() + estado.slice(1);
+    
+    // Construir lista de productos
+    let productosHTML = '';
+    if (ticket.pedido.detalles && ticket.pedido.detalles.length > 0) {
+        productosHTML = ticket.pedido.detalles.map(detalle => `
+            <tr border="1">
+                <td style="padding: 8px; border: 1px solid #ddd;">${detalle.producto?.nombre || 'Producto'}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${detalle.cantidad || 1}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">Bs. ${(detalle.precio_unitario || 0).toFixed(2)}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">Bs. ${((detalle.cantidad || 1) * (detalle.precio_unitario || 0)).toFixed(2)}</td>
+            </tr>
+        `).join('');
+    } else {
+        productosHTML = '<tr><td colspan="4" style="padding: 8px; border: 1px solid #ddd; text-align: center;">Sin productos</td></tr>';
+    }
+
+    // Obtener color de estado
+    let colorEstado = '#FCD34D'; // amarillo por defecto (pendiente)
+    let textoEstado = 'PENDIENTE';
+    
+    if (estado === 'pagado') {
+        colorEstado = '#86EFAC';
+        textoEstado = 'PAGADO';
+    } else if (estado === 'impreso') {
+        colorEstado = '#93C5FD';
+        textoEstado = 'IMPRESO';
+    } else if (estado === 'anulado') {
+        colorEstado = '#FCA5A5';
+        textoEstado = 'ANULADO';
+    }
+
+    const fechaFormato = new Date(ticket.fecha_emision).toLocaleString('es-BO', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    const contenidoImpresion = `
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Ticket #${ticket.numero_ticket}</title>
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                body {
+                    font-family: 'Courier New', monospace;
+                    background: white;
+                    padding: 20px;
+                }
+                
+                .ticket-container {
+                    max-width: 400px;
+                    margin: 0 auto;
+                    background: white;
+                    border: 2px solid #000;
+                    padding: 20px;
+                }
+                
+                .encabezado {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    border-bottom: 2px dashed #000;
+                    padding-bottom: 15px;
+                }
+                
+                .encabezado h1 {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+                
+                .encabezado p {
+                    font-size: 14px;
+                    margin: 3px 0;
+                }
+                
+                .fecha {
+                    font-size: 12px;
+                    color: #333;
+                    margin-top: 5px;
+                }
+                
+                .info-mesa {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 15px 0;
+                    padding: 10px;
+                    background: #f0f0f0;
+                    border-radius: 5px;
+                }
+                
+                .info-mesa div {
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+                
+                .info-mesa .etiqueta {
+                    font-size: 12px;
+                    color: #666;
+                    font-weight: normal;
+                }
+                
+                .productos {
+                    margin: 20px 0;
+                    border: 1px solid #000;
+                }
+                
+                .productos table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 12px;
+                }
+                
+                .productos th {
+                    background: #f0f0f0;
+                    padding: 8px;
+                    border: 1px solid #000;
+                    font-weight: bold;
+                    text-align: left;
+                }
+                
+                .productos td {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                }
+                
+                .cantidad {
+                    text-align: center !important;
+                }
+                
+                .precio, .subtotal {
+                    text-align: right !important;
+                }
+                
+                .estado-badge {
+                    display: inline-block;
+                    background: ${colorEstado};
+                    color: #000;
+                    padding: 8px 12px;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    font-size: 14px;
+                    margin: 15px 0;
+                    text-align: center;
+                    width: 100%;
+                    border: 2px solid #000;
+                }
+                
+                .totales {
+                    margin-top: 20px;
+                    padding-top: 15px;
+                    border-top: 2px dashed #000;
+                }
+                
+                .total-row {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                    padding: 10px;
+                    background: #fff3cd;
+                    border: 1px solid #ffc107;
+                    border-radius: 5px;
+                }
+                
+                .pie {
+                    text-align: center;
+                    margin-top: 20px;
+                    padding-top: 15px;
+                    border-top: 2px dashed #000;
+                    font-size: 12px;
+                    color: #666;
+                }
+                
+                @media print {
+                    body {
+                        padding: 0;
+                        margin: 0;
+                    }
+                    .ticket-container {
+                        border: none;
+                        max-width: 100%;
+                        padding: 0;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="ticket-container">
+                <div class="encabezado">
+                    <h1>🎫 TICKET</h1>
+                    <p>#${ticket.numero_ticket}</p>
+                    <p class="fecha">${fechaFormato}</p>
+                </div>
+                
+                <div class="info-mesa">
+                    <div>
+                        <span class="etiqueta">MESA</span><br>
+                        ${ticket.pedido.mesa?.numero_mesa || 'N/A'}
+                    </div>
+                    <div>
+                        <span class="etiqueta">CAJERO</span><br>
+                        ${ticket.pedido.usuario?.nombre || 'N/A'}
+                    </div>
+                </div>
+                
+                <div class="productos">
+                    <table>
+                        <thead>
+                            <tr border="1">
+                                <th style="border: 1px solid #000;">PRODUCTO</th>
+                                <th style="border: 1px solid #000;" class="cantidad">CANT</th>
+                                <th style="border: 1px solid #000;" class="precio">P.U.</th>
+                                <th style="border: 1px solid #000;" class="subtotal">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${productosHTML}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="estado-badge">
+                    ${textoEstado}
+                </div>
+                
+                <div class="totales">
+                    <div class="total-row">
+                        <span>TOTAL:</span>
+                        <span>Bs. ${parseFloat(ticket.pedido?.total || 0).toFixed(2)}</span>
+                    </div>
+                </div>
+                
+                <div class="pie">
+                    <p>Gracias por su compra 🙏</p>
+                    <p style="margin-top: 5px;">Para consultas: +591 XXXX XXXX</p>
+                </div>
+            </div>
+        </body>
+        </html>
+    `;
+
+    // Abrir en ventana de impresión
+    const ventana = window.open('', '_blank');
+    ventana.document.write(contenidoImpresion);
+    ventana.document.close();
+    
+    // Esperar a que cargue y luego imprimir
+    setTimeout(() => {
+        ventana.print();
+    }, 250);
 };
 
 // Limpiar intervalo cuando el componente se desmonta

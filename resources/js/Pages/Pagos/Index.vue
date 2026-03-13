@@ -53,7 +53,7 @@
                                         </p>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                        {{ pago.metodoPago?.nombre || 'N/A' }}
+                                        {{ pago.metodo_pago?.nombre || 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         {{ formatDate(pago.fecha_pago) }}
