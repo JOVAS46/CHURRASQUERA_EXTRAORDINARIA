@@ -92,13 +92,16 @@
                         </div>
 
                         <div class="flex gap-2">
-                            <!-- Link to create reservation with mesa parameter -->
-                            <Link :href="`/reservas/create?mesa=${mesa.id_mesa}`" 
+                            <Link v-if="mesa.estado !== 'mantenimiento'" :href="`/reservas/create?mesa=${mesa.id_mesa}`" 
                                 class="flex-1 text-center text-sm font-medium px-3 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition"
-                                :disabled="mesa.estado === 'mantenimiento'"
                             >
                                 📅 Reservar
                             </Link>
+                            <button v-else disabled
+                                class="flex-1 text-center text-sm font-medium px-3 py-2 rounded-md bg-gray-400 text-gray-600 cursor-not-allowed"
+                            >
+                                📅 Reservar
+                            </button>
                             <Link :href="`/mesas/${mesa.id_mesa}/edit`" 
                                 class="text-center text-sm font-medium px-3 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 transition"
                             >
