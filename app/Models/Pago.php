@@ -39,7 +39,7 @@ class Pago extends Model
 
     public function pedido()
     {
-        return $this->hasOneThrough(Pedido::class, Venta::class, 'id_venta', 'id_pedido');
+        return $this->belongsTo(Pedido::class, 'id_venta', 'id_pedido');
     }
 
     public function usuario()
