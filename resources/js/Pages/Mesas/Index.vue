@@ -92,6 +92,7 @@
                         </div>
 
                         <div class="flex gap-2">
+                            <!-- Link to create reservation with mesa parameter -->
                             <Link :href="`/reservas/create?mesa=${mesa.id_mesa}`" 
                                 class="flex-1 text-center text-sm font-medium px-3 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition"
                                 :disabled="mesa.estado === 'mantenimiento'"
