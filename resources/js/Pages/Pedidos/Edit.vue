@@ -61,7 +61,7 @@
                 <!-- Botones -->
                 <div class="flex gap-4">
                     <button type="submit" class="flex-1 bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-3 px-4 rounded-lg shadow-lg">
-                        ✅ Actualizar Estado
+                        <i class="fas fa-check-circle mr-2"></i> Actualizar Estado
                     </button>
                     <Link :href="`/pedidos/${pedido.id_pedido}`" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded text-center">
                         Cancelar

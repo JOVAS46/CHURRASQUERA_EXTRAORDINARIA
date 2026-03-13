@@ -74,13 +74,13 @@
                         </div>
                         <div v-if="detallesPedido" class="mt-2 text-sm">
                             <p v-if="formulario.monto > detallesPedido.pendiente" class="text-orange-600">
-                                ⚠️ Vuelto: Bs. {{ (formulario.monto - detallesPedido.pendiente).toFixed(2) }}
+                                <i class="fas fa-exclamation-circle mr-1 text-yellow-600"></i> Vuelto: Bs. {{ (formulario.monto - detallesPedido.pendiente).toFixed(2) }}
                             </p>
                             <p v-else-if="formulario.monto < detallesPedido.pendiente" class="text-yellow-600">
                                 ⓘ Falta: Bs. {{ (detallesPedido.pendiente - formulario.monto).toFixed(2) }}
                             </p>
                             <p v-else class="text-green-600 font-semibold">
-                                ✓ Pago exacto
+                                <i class="fas fa-check text-green-500 mr-1"></i> Pago exacto
                             </p>
                         </div>
                         <p v-if="errores.monto" class="text-red-600 text-sm mt-1">{{ errores.monto[0] }}</p>

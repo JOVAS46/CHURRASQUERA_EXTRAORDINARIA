@@ -122,7 +122,7 @@
                                             @click="verDetalles(reserva)"
                                             class="text-orange-600 hover:text-orange-900"
                                         >
-                                            👁️ Ver
+                                            <i class="fas fa-eye mr-1"></i> Ver
                                         </button>
                                     </td>
                                 </tr>

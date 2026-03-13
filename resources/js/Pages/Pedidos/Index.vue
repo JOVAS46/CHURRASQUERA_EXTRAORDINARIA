@@ -5,7 +5,7 @@
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-3xl font-bold text-gray-900">📋 Gestión de Pedidos</h1>
+                    <h1 class="text-3xl font-bold text-gray-900"><i class="fas fa-receipt mr-2"></i> Gestión de Pedidos</h1>
                     <Link href="/pedidos/create" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700">
                         + Nuevo Pedido
                     </Link>
@@ -13,7 +13,7 @@
 
                 <!-- Mensaje de éxito -->
                 <div v-if="$page.props.flash?.success" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    ✅ {{ $page.props.flash.success }}
+                    <i class="fas fa-check-circle mr-2"></i> {{ $page.props.flash.success }}
                 </div>
 
                 <!-- Tabla de Pedidos -->
@@ -38,7 +38,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         <div>
                                             <p class="font-semibold">Mesa {{ pedido.mesa?.numero_mesa }}</p>
-                                            <p class="text-xs text-gray-500">📍 {{ pedido.mesa?.ubicacion }}</p>
+                                            <p class="text-xs text-gray-500"><i class="fas fa-map-pin mr-1"></i> {{ pedido.mesa?.ubicacion }}</p>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
@@ -56,10 +56,10 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
                                         <Link :href="`/pedidos/${pedido.id_pedido}/edit`" class="text-orange-600 hover:text-orange-700 font-semibold">
-                                            ✏️ Editar
+                                            <i class="fas fa-edit mr-1"></i> Editar
                                         </Link>
                                         <button @click="deletePedido(pedido)" class="text-red-600 hover:text-red-700 font-semibold">
-                                            🗑️ Eliminar
+                                            <i class="fas fa-trash mr-1"></i> Eliminar
                                         </button>
                                     </td>
                                 </tr>
@@ -72,7 +72,7 @@
                 <div v-else class="bg-white rounded-lg shadow-sm p-12 text-center">
                     <p class="text-gray-500 text-lg mb-6">No hay pedidos registrados</p>
                     <Link href="/pedidos/create" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700">
-                        📋 Crear Pedido
+                        <i class="fas fa-plus mr-2"></i> Crear Pedido
                     </Link>
                 </div>
 

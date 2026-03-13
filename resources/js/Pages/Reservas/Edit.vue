@@ -121,7 +121,7 @@
                             type="submit"
                             class="flex-1 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-semibold transition"
                         >
-                            ✅ Actualizar Reserva
+                            <i class="fas fa-check-circle mr-2"></i> Actualizar Reserva
                         </button>
                         <Link 
                             href="/reservas"

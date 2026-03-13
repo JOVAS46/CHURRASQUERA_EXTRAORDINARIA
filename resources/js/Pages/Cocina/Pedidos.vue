@@ -4,13 +4,13 @@
             <div class="max-w-7xl mx-auto">
                 <!-- Encabezado -->
                 <div class="mb-8">
-                    <h1 class="text-4xl font-bold text-gray-900 mb-2">🍳 Cocina - Tablero de Pedidos</h1>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2"><i class="fas fa-utensils mr-2"></i> Cocina - Tablero de Pedidos</h1>
                     <p class="text-gray-600">Arrastra los pedidos para cambiar su estado</p>
                 </div>
 
                 <!-- Mensaje de éxito -->
                 <div v-if="$page.props.flash?.success" class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg animate-bounce">
-                    ✅ {{ $page.props.flash.success }}
+                    <i class="fas fa-check-circle mr-2 text-green-500"></i> {{ $page.props.flash.success }}
                 </div>
 
                 <!-- Kanban Board -->
@@ -18,7 +18,7 @@
                     <!-- Columna: Pendiente -->
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-all">
                         <div class="bg-yellow-500 text-white px-6 py-4">
-                            <h2 class="text-xl font-bold">⏳ Pendiente</h2>
+                            <h2 class="text-xl font-bold"><i class="fas fa-hourglass-half mr-2"></i> Pendiente</h2>
                             <p class="text-sm text-yellow-100">{{ pedidos.pendiente?.length || 0 }} pedidos</p>
                         </div>
                         <div 
@@ -40,7 +40,7 @@
                     <!-- Columna: En Preparación -->
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-all">
                         <div class="bg-blue-500 text-white px-6 py-4">
-                            <h2 class="text-xl font-bold">👨‍🍳 En Preparación</h2>
+                            <h2 class="text-xl font-bold"><i class="fas fa-utensils mr-2"></i> En Preparación</h2>
                             <p class="text-sm text-blue-100">{{ pedidos.en_preparacion?.length || 0 }} pedidos</p>
                         </div>
                         <div 
@@ -62,7 +62,7 @@
                     <!-- Columna: Listo -->
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-all">
                         <div class="bg-green-500 text-white px-6 py-4">
-                            <h2 class="text-xl font-bold">✅ Listo para Servir</h2>
+                            <h2 class="text-xl font-bold"><i class="fas fa-check-circle mr-2 text-green-500"></i> Listo para Servir</h2>
                             <p class="text-sm text-green-100">{{ pedidos.listo?.length || 0 }} pedidos</p>
                         </div>
                         <div 

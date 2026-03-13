@@ -40,10 +40,10 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ proveedor.email || 'N/A' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <span v-if="proveedor.estado === 'activo'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            ✓ Activo
+                                            <i class="fas fa-check text-green-500 mr-1"></i> Activo
                                         </span>
                                         <span v-else class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                            ✗ Inactivo
+                                            <i class="fas fa-times text-red-600 mr-1"></i> Inactivo
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">

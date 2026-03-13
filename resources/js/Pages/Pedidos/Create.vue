@@ -4,14 +4,14 @@
         
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-6">📋 Crear Nuevo Pedido</h1>
+                <h1 class="text-3xl font-bold text-gray-900 mb-6"><i class="fas fa-receipt mr-2"></i> Crear Nuevo Pedido</h1>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- Panel Izquierdo - Formulario y Productos -->
                     <div class="lg:col-span-2">
                         <!-- Selección de Mesa -->
                         <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-                            <label class="block text-sm font-semibold text-gray-900 mb-3">🍽️ Seleccionar Mesa *</label>
+                            <label class="block text-sm font-semibold text-gray-900 mb-3"><i class="fas fa-chair mr-1"></i> Seleccionar Mesa *</label>
                             <select 
                                 v-model="formulario.id_mesa"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
@@ -21,7 +21,7 @@
                                     Mesa {{ mesa.numero_mesa }} - Capacidad: {{ mesa.capacidad }} personas ({{ mesa.ubicacion }})
                                 </option>
                             </select>
-                            <p v-if="errors.id_mesa" class="text-red-600 text-sm mt-2">⚠️ {{ errors.id_mesa[0] }}</p>
+                            <p v-if="errors.id_mesa" class="text-red-600 text-sm mt-2"><i class="fas fa-exclamation-triangle mr-1 text-yellow-600"></i> {{ errors.id_mesa[0] }}</p>
                         </div>
 
                         <!-- Grid de Productos -->
@@ -32,7 +32,7 @@
                             <input 
                                 v-model="buscarProducto"
                                 type="text"
-                                placeholder="🔍 Buscar producto..."
+                                placeholder="<i class='fas fa-search'></i> Buscar producto..."
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-orange-500"
                             />
 

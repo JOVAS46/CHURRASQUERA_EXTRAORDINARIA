@@ -76,7 +76,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
-                    <p class="text-red-800 font-bold">⚠️ {{ estadisticas.pedidos_pendientes }} Pedidos Pendientes</p>
+                    <p class="text-red-800 font-bold"><i class="fas fa-exclamation-circle mr-1 text-red-600"></i> {{ estadisticas.pedidos_pendientes }} Pedidos Pendientes</p>
                     <p class="text-red-700 text-sm">Hay pedidos en espera de preparación</p>
                 </div>
             </div>
@@ -85,7 +85,7 @@
         <!-- Recent Orders -->
         <div class="bg-white rounded-lg shadow-lg border-2 border-orange-600">
             <div class="px-6 py-4 border-b-2 border-orange-600 bg-gradient-to-r from-orange-50 to-red-50">
-                <h2 class="text-lg font-bold text-orange-600">📋 Pedidos Recientes</h2>
+                <h2 class="text-lg font-bold text-orange-600"><i class="fas fa-receipt mr-2"></i> Pedidos Recientes</h2>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full">

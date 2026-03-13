@@ -67,7 +67,7 @@
                                         ]">
                                             {{ obtenerEstadoPago(ticket).texto }}
                                         </span>
-                                        <span v-else class="text-gray-500 text-xs">⏳ Sin pago</span>
+                                        <span v-else class="text-gray-500 text-xs"><i class="fas fa-hourglass-half mr-1"></i> Sin pago</span>
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <div class="flex gap-2 flex-wrap justify-center">

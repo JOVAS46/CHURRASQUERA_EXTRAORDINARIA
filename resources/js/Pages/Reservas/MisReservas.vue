@@ -13,7 +13,7 @@
 
                 <!-- Mensaje de éxito -->
                 <div v-if="$page.props.flash?.success" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    ✅ {{ $page.props.flash.success }}
+                    <i class="fas fa-check-circle mr-2"></i> {{ $page.props.flash.success }}
                 </div>
 
                 <!-- Filtros -->
@@ -95,12 +95,12 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
                                         <Link :href="`/reservas/${reserva.id_reserva}/edit`" class="text-orange-600 hover:text-orange-700 font-semibold">
-                                            ✏️ Editar
+                                            <i class="fas fa-edit mr-1"></i> Editar
                                         </Link>
                                         <button @click="cancelarReserva(reserva)" 
                                             v-if="!['completada', 'cancelada'].includes(reserva.estado)"
                                             class="text-red-600 hover:text-red-700 font-semibold">
-                                            ❌ Cancelar
+                                            <i class="fas fa-times-circle mr-1"></i> Cancelar
                                         </button>
                                     </td>
                                 </tr>

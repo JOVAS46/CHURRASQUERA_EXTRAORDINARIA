@@ -60,7 +60,7 @@
                                 @click="exportarCSV"
                                 class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700"
                             >
-                                📥 Exportar CSV
+                                <i class="fas fa-download mr-1"></i> Exportar CSV
                             </button>
                         </div>
                     </div>

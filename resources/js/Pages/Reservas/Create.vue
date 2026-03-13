@@ -9,7 +9,7 @@
                 <!-- Mensaje de Éxito -->
                 <div v-if="mensajeExito" class="mb-6 p-6 bg-gradient-to-r from-green-400 to-green-600 border-4 border-green-700 text-white rounded-lg shadow-lg animate-bounce">
                     <div class="flex items-center gap-4">
-                        <span class="text-5xl">✅</span>
+                        <span class="text-5xl"><i class="fas fa-check-circle text-green-500"></i></span>
                         <div>
                             <p class="font-bold text-2xl">¡RESERVA CREADA!</p>
                             <p class="text-lg mt-2">Tu reserva ha sido confirmada correctamente</p>
@@ -63,7 +63,7 @@
                                 <div>
                                     <p class="text-2xl font-bold text-orange-900">Mesa {{ mesaPreseleccionada.numero_mesa }}</p>
                                     <p class="text-sm text-orange-700 mt-1">👥 Capacidad: {{ mesaPreseleccionada.capacidad }} personas</p>
-                                    <p class="text-sm text-orange-700 mt-1">📍 {{ mesaPreseleccionada.ubicacion }}</p>
+                                    <p class="text-sm text-orange-700 mt-1"><i class="fas fa-map-pin mr-1"></i> {{ mesaPreseleccionada.ubicacion }}</p>
                                 </div>
                                 <span :class="['px-3 py-1 rounded-full text-xs font-semibold', 
                                     mesaPreseleccionada.estado === 'disponible' ? 'bg-green-100 text-green-800' :

@@ -8,7 +8,7 @@
 
                 <!-- Filtros por Fecha -->
                 <div class="bg-white rounded-lg shadow p-6 mb-6 border-l-4 border-blue-500">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">🔍 Filtros por Fecha</h2>
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4"><i class="fas fa-search mr-2"></i> Filtros por Fecha</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label for="fecha_inicio" class="block text-sm font-medium text-gray-700 mb-2">Fecha Inicio</label>
@@ -88,7 +88,7 @@
                                 <p class="text-3xl font-bold text-orange-600 mt-2">{{ formatCurrency(estadisticas.pendienteCobro) }}</p>
                                 <p class="text-xs text-gray-500 mt-2">Pendiente</p>
                             </div>
-                            <span class="text-4xl">⏳</span>
+                            <span class="text-4xl"><i class="fas fa-hourglass-half text-yellow-500"></i></span>
                         </div>
                     </div>
 

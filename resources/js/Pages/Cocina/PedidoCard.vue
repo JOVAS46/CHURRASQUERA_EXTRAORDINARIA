@@ -14,8 +14,8 @@
 
         <!-- Información de la mesa -->
         <div class="text-sm text-gray-600 mb-3">
-            <p class="font-semibold">📍 {{ pedido.mesa?.ubicacion || 'Sin ubicación' }}</p>
-            <p class="text-xs text-gray-500">👨‍🍳 Mesero: {{ pedido.usuario?.nombre || 'N/A' }}</p>
+            <p class="font-semibold"><i class="fas fa-map-pin mr-1"></i> {{ pedido.mesa?.ubicacion || 'Sin ubicación' }}</p>
+            <p class="text-xs text-gray-500"><i class="fas fa-user-tie mr-1"></i> Mesero: {{ pedido.usuario?.nombre || 'N/A' }}</p>
         </div>
 
         <!-- Detalles de productos -->
@@ -25,19 +25,19 @@
                 <p class="font-medium">{{ detalle.producto?.nombre }}</p>
                 <p class="text-xs text-gray-600">
                     Cantidad: <span class="font-bold">{{ detalle.cantidad }}x</span>
-                    <span v-if="detalle.observaciones" class="ml-2 text-orange-600">🔔 {{ detalle.observaciones }}</span>
+                    <span v-if="detalle.observaciones" class="ml-2 text-orange-600"><i class="fas fa-bell mr-1"></i> {{ detalle.observaciones }}</span>
                 </p>
             </div>
         </div>
 
         <!-- Hora del pedido -->
         <p class="text-xs text-gray-400 text-center mt-3">
-            🕐 {{ formatDate(pedido.fecha_pedido) }}
+            <i class="fas fa-clock mr-1"></i> {{ formatDate(pedido.fecha_pedido) }}
         </p>
 
         <!-- Indicador de arrastre -->
         <div v-if="estaDragging" class="text-center text-sm font-bold text-orange-600 mt-2">
-            ✋ Soltando...
+            <i class="fas fa-hand-paper mr-1"></i> Soltando...
         </div>
     </div>
 </template>

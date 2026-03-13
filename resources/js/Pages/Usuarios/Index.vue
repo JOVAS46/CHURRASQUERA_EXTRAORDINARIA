@@ -13,7 +13,7 @@
 
                 <!-- Mensaje de éxito -->
                 <div v-if="$page.props.flash?.success" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                    ✅ {{ $page.props.flash.success }}
+                    <i class="fas fa-check-circle mr-2"></i> {{ $page.props.flash.success }}
                 </div>
 
                 <!-- Tabla de Usuarios -->
@@ -53,10 +53,10 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                         <Link :href="`/admin/usuarios/${usuario.id_usuario}/edit`" class="text-orange-600 hover:text-orange-900 font-semibold">
-                                            ✏️ Editar
+                                            <i class="fas fa-edit mr-1"></i> Editar
                                         </Link>
                                         <button @click="eliminarUsuario(usuario)" class="text-red-600 hover:text-red-900 font-semibold">
-                                            🗑️ Eliminar
+                                            <i class="fas fa-trash mr-1"></i> Eliminar
                                         </button>
                                     </td>
                                 </tr>

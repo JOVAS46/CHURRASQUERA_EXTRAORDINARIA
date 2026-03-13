@@ -77,7 +77,7 @@
                                     :href="`/cliente/reservas/${reserva.id_reserva}/edit`"
                                     class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                                 >
-                                    ✏️ Editar
+                                    <i class="fas fa-edit mr-1"></i> Editar
                                 </Link>
                                 
                                 <button

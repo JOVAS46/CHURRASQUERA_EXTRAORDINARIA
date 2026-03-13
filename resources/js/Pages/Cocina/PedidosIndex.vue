@@ -4,7 +4,7 @@
         
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-6">🍳 Pedidos en Cocina</h1>
+                <h1 class="text-3xl font-bold text-gray-900 mb-6"><i class="fas fa-utensils mr-2"></i> Pedidos en Cocina</h1>
 
                 <!-- Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
@@ -43,7 +43,7 @@
                                     : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
                             ]"
                         >
-                            {{ filtro === 'pendiente' ? '⏳ Pendientes' : filtro === 'preparacion' ? '👨‍🍳 En Cocina' : '✓ Listos' }}
+                            {{ filtro === 'pendiente' ? '<i class="fas fa-hourglass-half"></i> Pendientes' : filtro === 'preparacion' ? '<i class="fas fa-utensils"></i> En Cocina' : '<i class="fas fa-check"></i> Listos' }}
                         </button>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                                     @click="cambiarEstado(pedido, 'preparacion')"
                                     class="flex-1 bg-yellow-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-yellow-700 transition"
                                 >
-                                    👨‍🍳 Comenzar Preparación
+                                    <i class="fas fa-utensils mr-2"></i> Comenzar Preparación
                                 </button>
                                 
                                 <button
@@ -106,7 +106,7 @@
                                     @click="cambiarEstado(pedido, 'listo')"
                                     class="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition"
                                 >
-                                    ✓ Listo para Servir
+                                    <i class="fas fa-check text-green-500 mr-1"></i> Listo para Servir
                                 </button>
 
                                 <button
@@ -114,7 +114,7 @@
                                     @click="verDetalles(pedido)"
                                     class="flex-1 bg-orange-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-orange-700 transition"
                                 >
-                                    👁️ Detalles
+                                    <i class="fas fa-eye mr-1"></i> Detalles
                                 </button>
                             </div>
                         </div>
@@ -174,9 +174,9 @@ const badgeColor = (estado) => {
 
 const estadoLabel = (estado) => {
     return {
-        'pendiente': '⏳ Pendiente',
-        'preparacion': '👨‍🍳 En Preparación',
-        'listo': '✓ Listo',
+        'pendiente': '<i class="fas fa-hourglass-half"></i> Pendiente',
+        'preparacion': '<i class="fas fa-utensils"></i> En Preparación',
+        'listo': '<i class="fas fa-check text-green-500"></i> Listo',
     }[estado] || estado;
 };
 

@@ -58,19 +58,20 @@
                 <!-- Estado -->
                 <div class="mt-8 p-4 rounded-lg" :class="user.estado ? 'bg-green-50 border border-green-600' : 'bg-red-50 border border-red-600'">
                     <p class="text-sm font-semibold" :class="user.estado ? 'text-green-800' : 'text-red-800'">
-                        {{ user.estado ? '✓ Cuenta Activa' : '✗ Cuenta Inactiva' }}
+                        <span v-if="user.estado"><i class="fas fa-check-circle mr-1 text-green-600"></i> Cuenta Activa</span>
+                        <span v-else><i class="fas fa-times-circle mr-1 text-red-600"></i> Cuenta Inactiva</span>
                     </p>
                 </div>
 
                 <!-- Botones de Acción -->
                 <div class="mt-8 space-y-3">
                     <Link href="/profile/edit" class="w-full block text-center bg-gradient-to-r from-orange-600 to-red-700 hover:from-orange-700 hover:to-red-800 text-white font-bold py-3 px-4 rounded-lg transition">
-                        ✏️ Editar Perfil
+                        <i class="fas fa-edit mr-1"></i> Editar Perfil
                     </Link>
                     
                     <form method="POST" action="/logout" class="w-full">
                         <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition">
-                            🚪 Cerrar Sesión
+                            <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
                         </button>
                     </form>
                 </div>

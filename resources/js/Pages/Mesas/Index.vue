@@ -14,7 +14,7 @@
                 <!-- Mensaje de Éxito -->
                 <div v-if="mensajeExito" class="mb-6 p-6 bg-gradient-to-r from-green-400 to-green-600 border-4 border-green-700 text-white rounded-lg shadow-lg animate-bounce">
                     <div class="flex items-center gap-4">
-                        <span class="text-5xl">✅</span>
+                        <span class="text-5xl"><i class="fas fa-check-circle text-green-500"></i></span>
                         <div>
                             <p class="font-bold text-2xl">¡RESERVA CREADA!</p>
                             <p class="text-lg mt-2">Tu reserva ha sido confirmada correctamente</p>
@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="bg-gray-50 rounded px-3 py-2 mb-4">
-                            <p class="text-xs text-gray-600">📍 Ubicación</p>
+                            <p class="text-xs text-gray-600"><i class="fas fa-map-pin mr-1"></i> Ubicación</p>
                             <p class="text-sm font-semibold text-gray-900">{{ mesa.ubicacion }}</p>
                         </div>
 
@@ -101,11 +101,11 @@
                             <Link :href="`/mesas/${mesa.id_mesa}/edit`" 
                                 class="text-center text-sm font-medium px-3 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 transition"
                             >
-                                ✏️
+                                <i class="fas fa-edit"></i>
                             </Link>
                             <button @click="deleteMesa(mesa)" 
                                 class="text-center text-sm font-medium px-3 py-2 rounded-md bg-red-100 text-red-700 hover:bg-red-200 transition">
-                                🗑️
+                                <i class="fas fa-trash"></i>
                             </button>
                         </div>
                     </div>
