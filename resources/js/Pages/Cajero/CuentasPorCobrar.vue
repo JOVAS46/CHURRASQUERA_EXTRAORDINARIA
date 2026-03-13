@@ -544,10 +544,11 @@ const generarQR = async (ticket) => {
 
         let data;
         try {
-            data = await response.json();
+            // Leer el texto primero (no se puede leer el stream dos veces)
+            const textResponse = await response.text();
+            data = JSON.parse(textResponse);
         } catch (parseError) {
-            console.error('Error al parsear JSON:', parseError);
-            console.error('Respuesta del servidor:', await response.text());
+            console.error('Error al parsear respuesta:', parseError);
             throw new Error('Respuesta inválida del servidor');
         }
 
