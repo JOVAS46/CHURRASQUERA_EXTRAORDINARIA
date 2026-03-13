@@ -92,11 +92,11 @@
                         </div>
 
                         <div class="flex gap-2">
-                            <Link v-if="mesa.estado !== 'mantenimiento'" :href="route('reservas.create', { mesa: mesa.id_mesa })" 
+                            <button v-if="mesa.estado !== 'mantenimiento'" @click="irAReservar(mesa.id_mesa)"
                                 class="flex-1 text-center text-sm font-medium px-3 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition"
                             >
                                 📅 Reservar
-                            </Link>
+                            </button>
                             <button v-else disabled
                                 class="flex-1 text-center text-sm font-medium px-3 py-2 rounded-md bg-gray-400 text-gray-600 cursor-not-allowed"
                             >
@@ -186,6 +186,10 @@ const deleteMesa = (mesa) => {
     if (confirm(`¿Estás seguro de que deseas eliminar la Mesa ${mesa.numero_mesa}?`)) {
         router.delete(`/mesas/${mesa.id_mesa}`);
     }
+};
+
+const irAReservar = (mesaId) => {
+    router.get(`/reservas/create?mesa=${mesaId}`);
 };
 
 // Monitorear mensajes flash
