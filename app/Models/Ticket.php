@@ -165,7 +165,7 @@ class Ticket extends Model
      */
     public static function getEstadosDisponibles(): array
     {
-        return ['pendiente', 'impreso', 'anulado'];
+        return ['pendiente', 'impreso', 'pagado', 'anulado'];
     }
 
     /**

@@ -23,11 +23,12 @@
                             <thead class="bg-gray-50 border-b border-gray-200">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID Pago</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pedido</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ticket</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pedido/Mesa</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Monto</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Método</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado Ticket</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
                                 </tr>
                             </thead>
@@ -35,6 +36,12 @@
                                 <tr v-for="pago in pagos.data" :key="pago.id_pago" class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <p class="text-sm font-mono font-semibold text-gray-900">{{ pago.id_pago }}</p>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        <div>
+                                            <p class="font-semibold">Ticket #{{ pago.pedido?.ticket?.numero_ticket || 'N/A' }}</p>
+                                            <p class="text-xs text-gray-500">{{ pago.pedido?.ticket?.tipo || 'Sin ticket' }}</p>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                         <div>
@@ -54,8 +61,8 @@
                                         {{ formatDate(pago.fecha_pago) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span :class="['px-3 py-1 rounded-full text-xs font-semibold', estadoBadge(pago.estado)]">
-                                            {{ pago.estado }}
+                                        <span :class="['px-3 py-1 rounded-full text-xs font-semibold', estadoTicketBadge(pago.pedido?.ticket?.estado)]">
+                                            {{ pago.pedido?.ticket?.estado || 'Sin ticket' }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
@@ -132,6 +139,16 @@ const estadoBadge = (estado) => {
         'completado': 'bg-green-100 text-green-800',
         'pendiente': 'bg-yellow-100 text-yellow-800',
         'cancelado': 'bg-red-100 text-red-800',
+    };
+    return colores[estado] || 'bg-gray-100 text-gray-800';
+};
+
+const estadoTicketBadge = (estado) => {
+    const colores = {
+        'pendiente': 'bg-yellow-100 text-yellow-800',
+        'impreso': 'bg-blue-100 text-blue-800',
+        'pagado': 'bg-green-100 text-green-800',
+        'anulado': 'bg-red-100 text-red-800',
     };
     return colores[estado] || 'bg-gray-100 text-gray-800';
 };

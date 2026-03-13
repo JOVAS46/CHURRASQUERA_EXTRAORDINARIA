@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pago;
 use App\Models\Pedido;
+use App\Models\Ticket;
 use App\Models\MetodoPago;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,7 +13,7 @@ class PagoController extends Controller
 {
     public function index()
     {
-        $pagos = Pago::with(['venta', 'pedido.mesa', 'metodoPago'])
+        $pagos = Pago::with(['venta', 'pedido.mesa', 'pedido.ticket', 'metodoPago'])
             ->orderBy('fecha_pago', 'desc')
             ->paginate(15);
 
@@ -48,6 +49,7 @@ class PagoController extends Controller
         ]);
 
         try {
+            // Crear el pago
             Pago::create([
                 'id_venta' => $validated['id_pedido'],
                 'id_metodo_pago' => $validated['id_metodo_pago'],
@@ -57,8 +59,14 @@ class PagoController extends Controller
                 'nro_transaccion' => 'TXN-' . date('YmdHis'),
             ]);
 
+            // Cambiar el estado del ticket a 'pagado'
+            $ticket = Ticket::where('id_pedido', $validated['id_pedido'])->first();
+            if ($ticket) {
+                $ticket->update(['estado' => 'pagado']);
+            }
+
             return redirect()->route('pagos.index')
-                ->with('success', 'Pago registrado exitosamente');
+                ->with('success', 'Pago registrado exitosamente y ticket marcado como pagado');
         } catch (\Exception $e) {
             return back()->with('error', 'Error al registrar el pago: ' . $e->getMessage());
         }
